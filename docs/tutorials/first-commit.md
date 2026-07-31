@@ -32,6 +32,8 @@ If you want to follow the example closely, edit a tutorial file. Any changed fil
 
 Staging first makes it clear exactly what the commit will contain. The composer considers staged, unstaged, and merge changes when suggesting scopes.
 
+![Open Source Control](../imgs/01.png "Open Source Control")
+
 ## 2. Start the composer
 
 Use either of these entry points:
@@ -40,6 +42,8 @@ Use either of these entry points:
 - Select the **Compose Contextual Conventional Commit** checklist icon in the Source Control view.
 
 If the workspace contains several Git repositories, choose the repository that contains your staged change. With one repository, this step is skipped.
+
+![Start the composer](../imgs/02.png "Start the composer")
 
 ## 3. Choose the type
 
@@ -52,6 +56,8 @@ The two types with standard release meaning are:
 
 The project policy can offer other types, including `docs`, `test`, `refactor`, and `chore`. Choose the type that describes the change itself, not the file you happened to edit.
 
+![Choose the type](../imgs/03.png "Choose the type")
+
 ## 4. Choose the scope
 
 Select **tutorial** when it appears in the scope list.
@@ -59,6 +65,8 @@ Select **tutorial** when it appears in the scope list.
 A scope identifies the affected part of the codebase and becomes the parenthesised part of the header. Because you selected `docs`, the default policy offers component and documentation scopes such as `readme`, `api`, `tutorial`, and `examples`. It excludes `docs` because `docs(docs)` repeats the type without identifying the affected documentation area.
 
 The extension lists non-excluded scopes inferred from changed directories first, followed by the scopes resolved for the selected type. **No scope** and **Enter custom scope…** appear only when that type's rule allows them.
+
+![Choose the scope](../imgs/04.png "Choose the scope")
 
 ## 5. Write the description
 
@@ -76,11 +84,15 @@ Use a short, imperative summary that completes the thought “this commit will�
 
 The field reports a policy error immediately. Correct the description before continuing.
 
+![Write the description](../imgs/05.png "Write the description")
+
 ## 6. Decide whether the change is breaking
 
 Select **No** for this example.
 
 Selecting **Yes** adds `!` before the colon and asks for an explanation of the incompatible public change. The explanation is written as a `BREAKING CHANGE:` footer. Use this only when consumers must change how they use the software.
+
+![Decide whether the change is breaking](../imgs/06.png "Decide whether the change is breaking")
 
 ## 7. Add context in the body
 
@@ -92,6 +104,8 @@ Explain how to install a downloaded VSIX.
 
 The body is optional. It should explain motivation or context that is not obvious from the header. Leave the field empty to omit it.
 
+![Add context in the body](../imgs/07.png "Add context in the body")
+
 ## 8. Link related work with a footer
 
 Select `Refs`, then enter this value:
@@ -99,6 +113,8 @@ Select `Refs`, then enter this value:
 ```text
 #123
 ```
+
+![Link related work with a footer](../imgs/08.png "Link related work with a footer")
 
 The picker returns after adding the trailer. Select **Finish trailers** to continue. Footers are optional; select **Finish trailers** immediately to omit them.
 
@@ -125,6 +141,8 @@ Refs: #123
 ```
 
 To verify it again, select **Validate Conventional Commit** beside the commit box. VS Code displays **The commit message is valid.**
+
+![Review the generated message](../imgs/09.png "Review the generated message")
 
 ## 10. Commit the staged change
 
