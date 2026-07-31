@@ -2,6 +2,7 @@ import type {
   CommitDraft,
   CommitPolicy,
   ResolvedScopePolicy,
+  ResolvedTrailerPolicy,
   TypeScopeRule
 } from './model';
 
@@ -23,6 +24,14 @@ export function resolveScopePolicy(type: string, policy: CommitPolicy): Resolved
     excluded,
     allowNone: rule.allowNone ?? true,
     allowCustom: rule.allowCustom ?? true
+  };
+}
+
+export function resolveTrailerPolicy(type: string, policy: CommitPolicy): ResolvedTrailerPolicy {
+  const rule = policy.typeTrailerMatrix[type] ?? {};
+  return {
+    highValue: normalize(rule.highValue ?? []),
+    discouraged: normalize(rule.discouraged ?? [])
   };
 }
 

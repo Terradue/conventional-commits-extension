@@ -14,6 +14,13 @@ export interface TypeScopeRule {
 export type ScopeGroups = Readonly<Record<string, readonly string[]>>;
 export type TypeScopeMatrix = Readonly<Record<string, TypeScopeRule>>;
 
+export interface TypeTrailerRule {
+  readonly highValue?: readonly string[];
+  readonly discouraged?: readonly string[];
+}
+
+export type TypeTrailerMatrix = Readonly<Record<string, TypeTrailerRule>>;
+
 export interface CommitDraft {
   readonly type: string;
   readonly scope?: string;
@@ -28,6 +35,7 @@ export interface CommitPolicy {
   readonly types: readonly CommitType[];
   readonly scopeGroups: ScopeGroups;
   readonly typeScopeMatrix: TypeScopeMatrix;
+  readonly typeTrailerMatrix: TypeTrailerMatrix;
   readonly headerMaxLength: number;
   readonly requireLowercaseDescription: boolean;
   readonly allowFinalPeriod: boolean;
@@ -38,4 +46,9 @@ export interface ResolvedScopePolicy {
   readonly excluded: readonly string[];
   readonly allowNone: boolean;
   readonly allowCustom: boolean;
+}
+
+export interface ResolvedTrailerPolicy {
+  readonly highValue: readonly string[];
+  readonly discouraged: readonly string[];
 }

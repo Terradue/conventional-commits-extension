@@ -36,6 +36,7 @@
           "default": [
             { "name": "feat", "description": "Introduce new functionality" },
             { "name": "fix", "description": "Correct defective behaviour" },
+            { "name": "security", "description": "Rectify a vulnerability or strengthen security" },
             { "name": "perf", "description": "Improve performance" },
             { "name": "refactor", "description": "Restructure code without changing behaviour" },
             { "name": "docs", "description": "Change documentation only" },
@@ -66,7 +67,8 @@
             "package-managers": ["npm", "pnpm", "yarn", "pip", "uv", "cargo"],
             "ci-providers": ["github-actions", "gitlab", "jenkins", "circleci", "azure-pipelines"],
             "documentation": ["readme", "api", "tutorial", "examples", "contributing"],
-            "test-layers": ["unit", "integration", "e2e", "fixtures"]
+            "test-layers": ["unit", "integration", "e2e", "fixtures"],
+            "security-areas": ["auth", "access-control", "session", "validation", "crypto", "secrets", "data-protection", "transport", "api", "dependencies", "supply-chain", "configuration", "logging"]
           },
           "additionalProperties": {
             "type": "array",
@@ -80,6 +82,7 @@
           "default": {
             "feat": { "groups": ["components"], "exclude": ["feat", "feature", "new"], "allowNone": true, "allowCustom": true },
             "fix": { "groups": ["components", "platforms"], "exclude": ["fix", "bug", "issue"], "allowNone": true, "allowCustom": true },
+            "security": { "groups": ["security-areas"], "exclude": ["security", "vulnerability", "vuln", "fix", "patch", "cve"], "allowNone": true, "allowCustom": true },
             "perf": { "groups": ["components"], "scopes": ["cache", "database", "renderer", "transport"], "exclude": ["perf", "performance", "speed"], "allowNone": true, "allowCustom": true },
             "refactor": { "groups": ["components"], "exclude": ["refactor", "code", "cleanup"], "allowNone": true, "allowCustom": true },
             "docs": { "groups": ["components", "documentation"], "exclude": ["docs", "documentation"], "allowNone": true, "allowCustom": true },
@@ -98,6 +101,32 @@
               "exclude": { "type": "array", "items": { "type": "string", "pattern": "^[^\\s()]+$" } },
               "allowNone": { "type": "boolean" },
               "allowCustom": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "contextualConventionalCommits.typeTrailerMatrix": {
+          "type": "object",
+          "scope": "resource",
+          "description": "Type-dependent Git trailer guidance used by the composer. High-value tokens are offered in a multi-select picker; discouraged entries are shown as contextual cautions.",
+          "default": {
+            "feat": { "highValue": ["Refs", "Implements", "Spec", "Release-note", "BREAKING CHANGE", "Co-authored-by", "Tested-by"], "discouraged": ["Fixes referring to a causal commit"] },
+            "fix": { "highValue": ["Fixes", "Closes", "Reported-by", "Tested-by", "Link", "CVE", "Backport-to"], "discouraged": ["Implements-blueprint"] },
+            "docs": { "highValue": ["Refs", "Link", "Reviewed-by", "Co-authored-by"], "discouraged": ["Tested-by, except for documentation builds"] },
+            "refactor": { "highValue": ["Refs", "Tested-by", "Benchmark", "Depends-on"], "discouraged": ["Closes, unless it genuinely resolves an issue"] },
+            "perf": { "highValue": ["Benchmark", "Test-results", "Fixes", "Refs", "Reviewed-by"], "discouraged": ["Release-note-none, unless required by policy"] },
+            "test": { "highValue": ["Refs", "Reported-by", "Test", "Coverage", "Fixes"], "discouraged": ["BREAKING CHANGE in most cases"] },
+            "build": { "highValue": ["Generated-by", "Dependency", "Upstream", "Build", "Refs"], "discouraged": ["Co-developed-by, unless genuinely applicable"] },
+            "ci": { "highValue": ["CI", "Test-plan", "Build", "Refs", "Depends-on"], "discouraged": ["User-facing Release-note in most cases"] },
+            "chore": { "highValue": ["Refs", "Generated-by", "Dependency-update", "No-changelog"], "discouraged": ["Fixes, unless the maintenance change fixes an actual defect"] },
+            "revert": { "highValue": ["Reverts", "Fixes", "Link", "Reported-by"], "discouraged": ["Implements"] },
+            "security": { "highValue": ["CVE", "GHSA", "Security-impact", "Fixes", "Closes", "Reported-by", "Backport-to"], "discouraged": ["Public embargo details before disclosure"] }
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "highValue": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+              "discouraged": { "type": "array", "items": { "type": "string", "minLength": 1 } }
             },
             "additionalProperties": false
           }

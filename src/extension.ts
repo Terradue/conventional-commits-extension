@@ -1,12 +1,18 @@
 import * as vscode from 'vscode';
-import { formatCommit, resolveScopePolicy, validateCommit } from './conventional';
+import {
+  formatCommit,
+  resolveScopePolicy,
+  resolveTrailerPolicy,
+  validateCommit
+} from './conventional';
 import { getRepository, inferScopes, type GitRepository } from './git';
 import type {
   CommitDraft,
   CommitPolicy,
   CommitType,
   ScopeGroups,
-  TypeScopeMatrix
+  TypeScopeMatrix,
+  TypeTrailerMatrix
 } from './model';
 
 const CONFIGURATION_SECTION = 'contextualConventionalCommits';
@@ -17,10 +23,59 @@ function getPolicy(resource?: vscode.Uri): CommitPolicy {
     types: configuration.get<CommitType[]>('types', []),
     scopeGroups: configuration.get<ScopeGroups>('scopeGroups', {}),
     typeScopeMatrix: configuration.get<TypeScopeMatrix>('typeScopeMatrix', {}),
+    typeTrailerMatrix: configuration.get<TypeTrailerMatrix>('typeTrailerMatrix', {}),
     headerMaxLength: configuration.get<number>('headerMaxLength', 72),
     requireLowercaseDescription: configuration.get<boolean>('requireLowercaseDescription', true),
     allowFinalPeriod: configuration.get<boolean>('allowFinalPeriod', false)
   };
+}
+
+async function selectTrailers(type: string, policy: CommitPolicy): Promise<readonly string[] | undefined> {
+  const trailerPolicy = resolveTrailerPolicy(type, policy);
+  const selectable = trailerPolicy.highValue.filter((token) => token !== 'BREAKING CHANGE');
+  let selected: readonly { label: string }[] = [];
+  if (selectable.length > 0) {
+    const picked = await vscode.window.showQuickPick(
+      selectable.map((token) => ({ label: token, description: `recommended for ${type}` })),
+      {
+        title: `Conventional Commit: trailers for ${type}`,
+        placeHolder: 'Select any recommended trailers; press Enter to skip',
+        canPickMany: true,
+        matchOnDescription: true
+      }
+    );
+    if (!picked) return undefined;
+    selected = picked;
+  }
+
+  const trailers: string[] = [];
+  for (const item of selected) {
+    const value = await vscode.window.showInputBox({
+      title: `${item.label} trailer`,
+      prompt: `Enter the value for ${item.label}`,
+      placeHolder: item.label === 'Co-authored-by' || item.label === 'Tested-by' || item.label === 'Reviewed-by'
+        ? 'Name <email@example.com>'
+        : '#123 or project-specific value',
+      validateInput: (input) => input.trim() ? undefined : 'A trailer value is required.'
+    });
+    if (value === undefined) return undefined;
+    trailers.push(`${item.label}: ${value.trim()}`);
+  }
+
+  const discouraged = trailerPolicy.discouraged.length > 0
+    ? ` Usually irrelevant or suspicious: ${trailerPolicy.discouraged.join('; ')}.`
+    : '';
+  const customInput = await vscode.window.showInputBox({
+    title: 'Conventional Commit: other trailers',
+    prompt: `Optional comma-separated custom Git trailers; leave empty to skip.${discouraged}`,
+    placeHolder: 'Refs: #123, Co-authored-by: Name <email@example.com>'
+  });
+  if (customInput === undefined) return undefined;
+
+  return [
+    ...trailers,
+    ...customInput.split(',').map((trailer) => trailer.trim()).filter(Boolean)
+  ];
 }
 
 async function selectType(policy: CommitPolicy): Promise<string | undefined> {
@@ -103,10 +158,15 @@ async function compose(repository: GitRepository): Promise<string | undefined> {
   });
   if (!description) return undefined;
 
+  const trailerPolicy = resolveTrailerPolicy(type, policy);
+  const breakingGuidance = trailerPolicy.highValue.includes('BREAKING CHANGE')
+    ? `Recommended for incompatible ${type} changes`
+    : trailerPolicy.discouraged.find((item) => item.startsWith('BREAKING CHANGE'))
+      ?? 'Mark the commit as introducing a breaking change';
   const breakingChoice = await vscode.window.showQuickPick(
     [
       { label: 'No', breaking: false },
-      { label: 'Yes', breaking: true, description: 'Mark the commit as introducing a breaking change' }
+      { label: 'Yes', breaking: true, description: breakingGuidance }
     ],
     { title: 'Conventional Commit: breaking change?' }
   );
@@ -130,12 +190,8 @@ async function compose(repository: GitRepository): Promise<string | undefined> {
   });
   if (body === undefined) return undefined;
 
-  const footerInput = await vscode.window.showInputBox({
-    title: 'Conventional Commit: footers',
-    prompt: 'Optional comma-separated Git trailers',
-    placeHolder: 'Refs: #123, Co-authored-by: Name <email@example.com>'
-  });
-  if (footerInput === undefined) return undefined;
+  const footers = await selectTrailers(type, policy);
+  if (!footers) return undefined;
 
   const draft: CommitDraft = {
     type,
@@ -144,7 +200,7 @@ async function compose(repository: GitRepository): Promise<string | undefined> {
     breaking: breakingChoice.breaking,
     body: body.trim() || undefined,
     breakingDescription,
-    footers: footerInput.split(',').map((footer) => footer.trim()).filter(Boolean)
+    footers
   };
   const message = formatCommit(draft);
   const errors = validateCommit(message, policy);

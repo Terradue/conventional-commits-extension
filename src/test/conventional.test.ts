@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { formatCommit, resolveScopePolicy, validateCommit } from '../conventional';
+import {
+  formatCommit,
+  resolveScopePolicy,
+  resolveTrailerPolicy,
+  validateCommit
+} from '../conventional';
 import type { CommitPolicy } from '../model';
 
 const policy: CommitPolicy = {
@@ -15,6 +20,12 @@ const policy: CommitPolicy = {
   typeScopeMatrix: {
     feat: { groups: ['components'], exclude: ['feat'], allowNone: true, allowCustom: true },
     build: { groups: ['tools'], exclude: ['build'], allowNone: true, allowCustom: false }
+  },
+  typeTrailerMatrix: {
+    feat: {
+      highValue: ['Refs', 'BREAKING CHANGE', 'Refs', ' Tested-by '],
+      discouraged: ['Fixes referring to a causal commit']
+    }
   },
   headerMaxLength: 72,
   requireLowercaseDescription: true,
@@ -31,6 +42,19 @@ test('formats a complete breaking commit', () => {
 test('resolves reusable scope groups for a type', () => {
   assert.deepEqual(resolveScopePolicy('build', policy), {
     scopes: ['npm', 'docker'], excluded: ['build'], allowNone: true, allowCustom: false
+  });
+});
+
+test('resolves and normalizes contextual trailers for a type', () => {
+  assert.deepEqual(resolveTrailerPolicy('feat', policy), {
+    highValue: ['Refs', 'BREAKING CHANGE', 'Tested-by'],
+    discouraged: ['Fixes referring to a causal commit']
+  });
+});
+
+test('uses an empty permissive trailer policy for an unknown type', () => {
+  assert.deepEqual(resolveTrailerPolicy('custom', policy), {
+    highValue: [], discouraged: []
   });
 });
 
