@@ -3,7 +3,8 @@ import {
   formatCommit,
   resolveScopePolicy,
   resolveTrailerPolicy,
-  validateCommit
+  validateCommit,
+  validateTrailerToken
 } from './conventional';
 import { getRepository, inferScopes, type GitRepository } from './git';
 import type {
@@ -32,50 +33,94 @@ function getPolicy(resource?: vscode.Uri): CommitPolicy {
 
 async function selectTrailers(type: string, policy: CommitPolicy): Promise<readonly string[] | undefined> {
   const trailerPolicy = resolveTrailerPolicy(type, policy);
-  const selectable = trailerPolicy.highValue.filter((token) => token !== 'BREAKING CHANGE');
-  let selected: readonly { label: string }[] = [];
-  if (selectable.length > 0) {
-    const picked = await vscode.window.showQuickPick(
-      selectable.map((token) => ({ label: token, description: `recommended for ${type}` })),
-      {
-        title: `Conventional Commit: trailers for ${type}`,
-        placeHolder: 'Select any recommended trailers; press Enter to skip',
-        canPickMany: true,
-        matchOnDescription: true
-      }
-    );
-    if (!picked) return undefined;
-    selected = picked;
-  }
-
   const trailers: string[] = [];
-  for (const item of selected) {
+
+  type TrailerAction = 'add' | 'custom' | 'remove' | 'finish';
+  type TrailerPick = vscode.QuickPickItem & { action: TrailerAction; token?: string };
+
+  async function addTrailer(token: string): Promise<boolean> {
     const value = await vscode.window.showInputBox({
-      title: `${item.label} trailer`,
-      prompt: `Enter the value for ${item.label}`,
-      placeHolder: item.label === 'Co-authored-by' || item.label === 'Tested-by' || item.label === 'Reviewed-by'
+      title: `${token} trailer`,
+      prompt: `Enter the value for ${token}`,
+      placeHolder: token === 'Co-authored-by' || token === 'Tested-by' || token === 'Reviewed-by'
         ? 'Name <email@example.com>'
         : '#123 or project-specific value',
       validateInput: (input) => input.trim() ? undefined : 'A trailer value is required.'
     });
-    if (value === undefined) return undefined;
-    trailers.push(`${item.label}: ${value.trim()}`);
+    if (value === undefined) return false;
+    trailers.push(`${token}: ${value.trim()}`);
+    return true;
   }
 
-  const discouraged = trailerPolicy.discouraged.length > 0
-    ? ` Usually irrelevant or suspicious: ${trailerPolicy.discouraged.join('; ')}.`
-    : '';
-  const customInput = await vscode.window.showInputBox({
-    title: 'Conventional Commit: other trailers',
-    prompt: `Optional comma-separated custom Git trailers; leave empty to skip.${discouraged}`,
-    placeHolder: 'Refs: #123, Co-authored-by: Name <email@example.com>'
-  });
-  if (customInput === undefined) return undefined;
+  while (true) {
+    const recommended: TrailerPick[] = trailerPolicy.highValue
+      .filter((token) => token !== 'BREAKING CHANGE')
+      .map((token) => {
+        const count = trailers.filter((trailer) => trailer.startsWith(`${token}:`)).length;
+        return {
+          label: token,
+          description: count > 0 ? `recommended for ${type} · added ${count}` : `recommended for ${type}`,
+          action: 'add',
+          token
+        };
+      });
+    const caution = trailerPolicy.discouraged.length > 0
+      ? `Usually irrelevant or suspicious for ${type}: ${trailerPolicy.discouraged.join('; ')}`
+      : undefined;
+    const items: TrailerPick[] = [
+      {
+        label: '$(check) Finish trailers',
+        description: trailers.length === 0 ? 'continue without trailers' : `use ${trailers.length} added trailer(s)`,
+        action: 'finish'
+      },
+      ...recommended,
+      {
+        label: '$(add) Add custom trailer…',
+        description: 'enter one custom token and value',
+        detail: caution,
+        action: 'custom'
+      }
+    ];
+    if (trailers.length > 0) {
+      items.push({
+        label: '$(trash) Remove an added trailer…',
+        description: trailers.join(' · '),
+        action: 'remove'
+      });
+    }
 
-  return [
-    ...trailers,
-    ...customInput.split(',').map((trailer) => trailer.trim()).filter(Boolean)
-  ];
+    const selected = await vscode.window.showQuickPick(items, {
+      title: `Conventional Commit: trailers for ${type} (${trailers.length} added)`,
+      placeHolder: 'Add one trailer at a time, or finish',
+      matchOnDescription: true,
+      matchOnDetail: true
+    });
+    if (!selected) return undefined;
+    if (selected.action === 'finish') return trailers;
+
+    if (selected.action === 'remove') {
+      const removed = await vscode.window.showQuickPick(
+        trailers.map((trailer, index) => ({ label: trailer, index })),
+        { title: 'Remove an added trailer', placeHolder: 'Select the trailer to remove' }
+      );
+      if (removed) trailers.splice(removed.index, 1);
+      continue;
+    }
+
+    let token = selected.token;
+    if (selected.action === 'custom') {
+      const customToken = await vscode.window.showInputBox({
+        title: 'Custom Git trailer token',
+        prompt: 'Enter a token; its value is collected next',
+        placeHolder: 'Reviewed-by',
+        validateInput: validateTrailerToken
+      });
+      if (customToken === undefined) return undefined;
+      token = customToken.trim();
+    }
+
+    if (token && !await addTrailer(token)) return undefined;
+  }
 }
 
 async function selectType(policy: CommitPolicy): Promise<string | undefined> {

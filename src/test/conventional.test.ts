@@ -4,7 +4,8 @@ import {
   formatCommit,
   resolveScopePolicy,
   resolveTrailerPolicy,
-  validateCommit
+  validateCommit,
+  validateTrailerToken
 } from '../conventional';
 import type { CommitPolicy } from '../model';
 
@@ -56,6 +57,18 @@ test('uses an empty permissive trailer policy for an unknown type', () => {
   assert.deepEqual(resolveTrailerPolicy('custom', policy), {
     highValue: [], discouraged: []
   });
+});
+
+test('accepts conventional custom trailer tokens', () => {
+  assert.equal(validateTrailerToken(' Reviewed-by '), undefined);
+  assert.equal(validateTrailerToken('CVE'), undefined);
+});
+
+test('rejects invalid and specially handled custom trailer tokens', () => {
+  assert.equal(validateTrailerToken(''), 'A trailer token is required.');
+  assert.equal(validateTrailerToken('Reviewed by'),
+    'Use letters, numbers, and hyphens; replace spaces with hyphens.');
+  assert.equal(validateTrailerToken('BREAKING CHANGE'), 'Use the dedicated breaking-change step.');
 });
 
 test('rejects redundant type-scope pairs', () => {

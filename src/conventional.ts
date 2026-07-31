@@ -35,6 +35,16 @@ export function resolveTrailerPolicy(type: string, policy: CommitPolicy): Resolv
   };
 }
 
+export function validateTrailerToken(input: string): string | undefined {
+  const token = input.trim();
+  if (!token) return 'A trailer token is required.';
+  if (token === 'BREAKING CHANGE') return 'Use the dedicated breaking-change step.';
+  if (!/^[A-Za-z0-9-]+$/.test(token)) {
+    return 'Use letters, numbers, and hyphens; replace spaces with hyphens.';
+  }
+  return undefined;
+}
+
 export function formatCommit(draft: CommitDraft): string {
   const scope = draft.scope ? `(${draft.scope})` : '';
   const breaking = draft.breaking ? '!' : '';

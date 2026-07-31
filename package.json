@@ -112,7 +112,7 @@
         "contextualConventionalCommits.typeTrailerMatrix": {
           "type": "object",
           "scope": "resource",
-          "description": "Type-dependent Git trailer guidance used by the composer. High-value tokens are offered in a multi-select picker; discouraged entries are shown as contextual cautions.",
+          "description": "Type-dependent Git trailer guidance used by the composer. High-value tokens are offered for incremental composition; discouraged entries are shown as contextual cautions.",
           "default": {
             "feat": { "highValue": ["Refs", "Implements", "Spec", "Release-note", "BREAKING CHANGE", "Co-authored-by", "Tested-by"], "discouraged": ["Fixes referring to a causal commit"] },
             "fix": { "highValue": ["Fixes", "Closes", "Reported-by", "Tested-by", "Link", "CVE", "Backport-to"], "discouraged": ["Implements-blueprint"] },
