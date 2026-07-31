@@ -12,13 +12,15 @@ Store project-wide settings in `.vscode/settings.json` so contributors who open 
   "contextualConventionalCommits.types": [
     { "name": "feat", "description": "Introduce new functionality" },
     { "name": "fix", "description": "Correct defective behaviour" },
+    { "name": "security", "description": "Rectify a vulnerability or strengthen security" },
     { "name": "docs", "description": "Change documentation only" },
     { "name": "build", "description": "Change the build system or dependencies" }
   ],
   "contextualConventionalCommits.scopeGroups": {
     "components": ["api", "cli", "parser"],
     "documentation": ["readme", "api", "tutorial"],
-    "package-managers": ["npm", "pnpm", "uv"]
+    "package-managers": ["npm", "pnpm", "uv"],
+    "security-areas": ["auth", "access-control", "crypto", "secrets", "dependencies"]
   },
   "contextualConventionalCommits.typeScopeMatrix": {
     "feat": {
@@ -30,6 +32,12 @@ Store project-wide settings in `.vscode/settings.json` so contributors who open 
     "fix": {
       "groups": ["components"],
       "exclude": ["fix", "bug"],
+      "allowNone": true,
+      "allowCustom": true
+    },
+    "security": {
+      "groups": ["security-areas"],
+      "exclude": ["security", "vulnerability", "fix", "patch", "cve"],
       "allowNone": true,
       "allowCustom": true
     },
@@ -47,6 +55,20 @@ Store project-wide settings in `.vscode/settings.json` so contributors who open 
       "allowCustom": false
     }
   },
+  "contextualConventionalCommits.typeTrailerMatrix": {
+    "feat": {
+      "highValue": ["Refs", "Implements", "Spec", "BREAKING CHANGE"],
+      "discouraged": ["Fixes referring to a causal commit"]
+    },
+    "fix": {
+      "highValue": ["Fixes", "Closes", "Reported-by", "Tested-by"],
+      "discouraged": ["Implements-blueprint"]
+    },
+    "security": {
+      "highValue": ["CVE", "GHSA", "Security-impact", "Fixes", "Backport-to"],
+      "discouraged": ["Public embargo details before disclosure"]
+    }
+  },
   "contextualConventionalCommits.headerMaxLength": 72,
   "contextualConventionalCommits.requireLowercaseDescription": true,
   "contextualConventionalCommits.allowFinalPeriod": false,
@@ -61,6 +83,8 @@ Store project-wide settings in `.vscode/settings.json` so contributors who open 
 
 Type names must begin with a lowercase letter and may contain lowercase letters, numbers, and hyphens. Scope values must not contain whitespace or parentheses.
 
+If the repository also uses commitlint with a restricted `type-enum`, add custom types such as `security` to that configuration as well. The extension does not read or execute `commitlint.config.*`.
+
 ## Choose how strict each type should be
 
 Use the rule switches independently for every type:
@@ -71,6 +95,12 @@ Use the rule switches independently for every type:
 - omit either boolean to retain its permissive default of `true`.
 
 If a type has no matrix rule, it resolves no predefined scopes but still permits **No scope** and **Enter custom scope…** by default.
+
+## Customize trailer guidance
+
+Use `highValue` to populate the type-specific multi-select trailer picker and `discouraged` to surface cautions beside the custom-trailer prompt. Neither field requires or forbids a trailer. An absent trailer rule simply leaves the recommended picker empty while retaining custom entry.
+
+Keep caution text explanatory when a trailer has legitimate exceptions, for example `"Tested-by, except for documentation builds"`. For security fixes under embargo, do not encode private vulnerability details in a public commit message.
 
 ## Choose the configuration level
 

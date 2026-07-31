@@ -19,7 +19,7 @@ The extension generates messages based on [Conventional Commits 1.0.0](https://w
 | `!` | No | Added when **breaking change** is **Yes**. |
 | Description | Yes | Validated while it is entered. |
 | Body | No | Collected in one input field and separated from the header by a blank line. |
-| Footers | No | Entered as comma-separated trailers and emitted one per line. |
+| Footers | No | Recommended tokens are selected contextually by type, their values are collected individually, and custom comma-separated trailers can be appended. All are emitted one per line. |
 | `BREAKING CHANGE:` | For breaking compositions | Generated from the required breaking-change description. |
 
 ## Validation rules
@@ -77,5 +77,5 @@ Refs: #42
 ## Current input limitations
 
 - The body prompt is a single VS Code input field, so the composer does not create a multi-paragraph body.
-- Commas delimit footer entries, so an individual footer value cannot contain a comma.
+- Commas delimit custom trailer entries, so a custom trailer value cannot contain a comma. Values entered for recommended trailers may contain commas.
 - Validation checks the header and project policy; it is not a complete parser for every body and footer rule in the Conventional Commits specification.

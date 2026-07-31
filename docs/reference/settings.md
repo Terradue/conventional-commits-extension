@@ -7,6 +7,7 @@ All settings use the `contextualConventionalCommits` namespace and can be config
 | `types` | array of objects | See below | Allowed commit types and their picker descriptions. |
 | `scopeGroups` | object of string arrays | See below | Reusable named scope groups referenced by type rules. |
 | `typeScopeMatrix` | object of rules | See below | Contextual scope policy keyed by commit type. |
+| `typeTrailerMatrix` | object of rules | See below | Contextual Git trailer suggestions and cautions keyed by commit type. |
 | `inferScopesFromChangedFiles` | boolean | `true` | Prioritize top-level directories from staged, unstaged, and merge changes as scope candidates. |
 | `headerMaxLength` | integer | `72` | Maximum header length; minimum configurable value is 20. |
 | `requireLowercaseDescription` | boolean | `true` | Require the first description character to be lowercase. |
@@ -15,7 +16,7 @@ All settings use the `contextualConventionalCommits` namespace and can be config
 
 ## Types
 
-The default types are `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `style`, `chore`, and `revert`. Each entry has a `name` and picker `description`:
+The default types are `feat`, `fix`, `security`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `style`, `chore`, and `revert`. Each entry has a `name` and picker `description`:
 
 ```json
 {
@@ -28,9 +29,11 @@ The default types are `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`
 
 Type names must match `^[a-z][a-z0-9-]*$`.
 
+`security` is a useful project extension for vulnerability remediation and security hardening, but Conventional Commits 1.0.0 does not prescribe it or any other fixed type list. Add `security` to external tools such as commitlint when their configuration restricts allowed types.
+
 ## Scope groups
 
-`scopeGroups` defines reusable named lists. The bundled groups are `components`, `platforms`, `build-tools`, `package-managers`, `ci-providers`, `documentation`, and `test-layers`.
+`scopeGroups` defines reusable named lists. The bundled groups are `components`, `platforms`, `build-tools`, `package-managers`, `ci-providers`, `documentation`, `test-layers`, and `security-areas`.
 
 ```json
 {
@@ -73,6 +76,30 @@ Resolution expands `groups`, appends direct `scopes`, removes duplicate and blan
 
 This rule accepts `build(npm)` and `build(deps)`, requires a scope, rejects `build(build)`, and rejects unlisted values such as `build(api)`.
 
+## Type-to-trailer matrix
+
+`typeTrailerMatrix` maps a type to optional guidance. It does not make trailers mandatory and does not reject a discouraged trailer, because relevance depends on the actual change.
+
+| Field | Type | Default when omitted | Meaning |
+| --- | --- | --- | --- |
+| `highValue` | string array | `[]` | Trailer tokens offered in the type-specific multi-select picker. |
+| `discouraged` | string array | `[]` | Cautions displayed when the composer offers custom trailers. Entries may explain a conditional exception. |
+
+Values are trimmed and de-duplicated. After selection, the composer collects each recommended trailer value separately and emits one trailer per line. `BREAKING CHANGE` is configured as high-value for `feat`, but the trailer picker omits it because the dedicated breaking-change step generates it together with the header `!` marker.
+
+```json
+{
+  "contextualConventionalCommits.typeTrailerMatrix": {
+    "perf": {
+      "highValue": ["Benchmark", "Test-results", "Fixes", "Refs", "Reviewed-by"],
+      "discouraged": ["Release-note-none, unless required by policy"]
+    }
+  }
+}
+```
+
+An absent rule still permits custom trailers; it simply provides no recommended picker choices or cautions.
+
 ## Inferred scopes
 
 When inference is enabled, top-level changed directories are placed before configured scopes in the picker and labelled **inferred from changed files**. Values in the selected type's `exclude` list are not offered. Inference reads staged, unstaged, and merge changes, lowercases the first path segment, replaces unsupported characters with hyphens, ignores dot-prefixed directories, sorts the result, and removes picker duplicates.
@@ -104,6 +131,16 @@ An inferred value is still subject to validation. In particular, a type with `al
       "exclude": ["build"],
       "allowNone": true,
       "allowCustom": false
+    }
+  },
+  "contextualConventionalCommits.typeTrailerMatrix": {
+    "feat": {
+      "highValue": ["Refs", "Implements", "Spec", "Release-note", "BREAKING CHANGE"],
+      "discouraged": ["Fixes referring to a causal commit"]
+    },
+    "build": {
+      "highValue": ["Generated-by", "Dependency", "Upstream", "Build", "Refs"],
+      "discouraged": ["Co-developed-by, unless genuinely applicable"]
     }
   },
   "contextualConventionalCommits.inferScopesFromChangedFiles": true,

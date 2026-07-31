@@ -12,6 +12,7 @@ Unlike flat scope pickers, this extension resolves scopes **after the commit typ
 - optional or required scopes per type;
 - configurable custom-scope entry;
 - changed-directory scope inference;
+- contextual, type-specific Git trailer suggestions and cautions;
 - Conventional Commit formatting and validation;
 - breaking-change body and Git trailers;
 - multi-repository workspace support;
@@ -119,6 +120,25 @@ Rule fields:
 | `allowNone` | Whether an unscoped commit is accepted |
 | `allowCustom` | Whether users may enter a scope outside the resolved list |
 
+### `contextualConventionalCommits.typeTrailerMatrix`
+
+Maps each type to high-value trailer tokens and contextual cautions. Recommended tokens are offered in a multi-select picker; the composer then asks for each selected value. Custom trailers remain available.
+
+```json
+{
+  "contextualConventionalCommits.typeTrailerMatrix": {
+    "fix": {
+      "highValue": ["Fixes", "Closes", "Reported-by", "Tested-by"],
+      "discouraged": ["Implements-blueprint"]
+    },
+    "security": {
+      "highValue": ["CVE", "GHSA", "Security-impact", "Fixes", "Backport-to"],
+      "discouraged": ["Public embargo details before disclosure"]
+    }
+  }
+}
+```
+
 ## Recommended semantic model
 
 The **type** answers what kind of change occurred. The **scope** identifies which package, subsystem, component, platform, or artefact is affected.
@@ -131,6 +151,7 @@ fix(parser): handle escaped names
 build(pnpm): update lockfile
 ci(github-actions): publish release assets
 docs(cli): document authentication options
+security(auth): reject replayed authentication tokens
 ```
 
 Redundant examples rejected by the default policy:
@@ -143,7 +164,7 @@ ci(ci): adjust workflow
 docs(docs): improve guide
 ```
 
-See [`docs/type-scope-best-practices.md`](docs/type-scope-best-practices.md) for the consolidated matrix.
+The default policy also includes the project extension type `security`. It is not a built-in Conventional Commits type; projects using commitlint must add it to their `type-enum` rule. See [`docs/type-scope-best-practices.md`](docs/type-scope-best-practices.md) for the consolidated scope and trailer guidance.
 
 ## Development
 
@@ -158,3 +179,4 @@ The extension requires VS Code 1.95 or newer.
 ## License
 
 [![Apache License, Version 2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue)](https://www.apache.org/licenses/LICENSE-2.0)
+ASSs

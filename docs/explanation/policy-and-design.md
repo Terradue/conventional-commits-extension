@@ -12,7 +12,7 @@ No repository contents or commit messages are sent to an external service. Scope
 
 VS Code settings can apply to a user, workspace, or individual workspace folder. The extension resolves policy against the selected repository, which gives a multi-root workspace the right configuration for each project.
 
-This makes `.vscode/settings.json` the practical policy boundary: a repository can share types, contextual scope rules, and style constraints without executing code. The current release intentionally does not evaluate JavaScript-based `commitlint.config.*` files.
+This makes `.vscode/settings.json` the practical policy boundary: a repository can share types, contextual scope rules, trailer guidance, and style constraints without executing code. The current release intentionally does not evaluate JavaScript-based `commitlint.config.*` files.
 
 ## Scope is contextual, not a flat list
 
@@ -21,6 +21,12 @@ The type and scope describe different dimensions: the type says what kind of cha
 Each type can reuse named scope groups, add direct scopes, exclude redundant pairings, require a scope, and decide whether an unlisted custom scope is acceptable. This makes pairings such as `build(npm)` available without encouraging `build(build)`, and lets a strict project reject `build(api)` when `api` is not part of its build policy.
 
 Rules omitted from `typeScopeMatrix` remain permissive: no configured scopes are resolved, but an unscoped or custom-scoped commit is allowed by default. This prevents adding a custom type from silently making it unusable.
+
+## Trailer guidance is contextual, not mandatory
+
+Trailer value depends on intent. `Fixes` is strong evidence for a defect correction, while it can be misleading on a feature that merely relates to an earlier commit. The composer therefore offers `highValue` tokens after the type is known and surfaces `discouraged` guidance beside the custom-trailer escape hatch.
+
+Neither list is an allowlist or a validation rule. Conditional cases remain possible, and projects can replace the complete matrix. `BREAKING CHANGE` stays in the `feat` guidance model but is generated through the dedicated breaking-change flow so the header and footer signals remain consistent.
 
 ## Composition and validation are separate
 
