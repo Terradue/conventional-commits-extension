@@ -24,12 +24,20 @@ The **Yes** choice carries type-specific guidance when `BREAKING CHANGE` appears
 
 ## Add issue references and trailers
 
-At the type-specific trailer picker, select any recommended tokens. The extension asks for each value separately, so a selected `Refs` token with value `#42` becomes `Refs: #42`.
+The type-specific trailer picker remains open until you select **Finish trailers**:
 
-The next prompt accepts optional comma-separated custom Git-trailer-style values:
+1. Select a recommended token such as `Refs`, or select **Add custom trailer…** and enter a token.
+2. Enter its value. A selected `Refs` token with value `#42` becomes `Refs: #42`.
+3. Repeat to add more trailers, including another trailer with the same token.
+4. If necessary, select **Remove an added trailer…** and choose the entry to discard.
+5. Select **Finish trailers** when the list is complete.
+
+For example, add these three token/value pairs:
 
 ```text
-Refs: #42, Reviewed-by: A. Developer, Co-authored-by: Name <name@example.com>
+Refs → #42
+Reviewed-by → A. Developer
+Co-authored-by → Name <name@example.com>
 ```
 
 They become:
@@ -42,9 +50,8 @@ Co-authored-by: Name <name@example.com>
 
 Use hyphens instead of spaces in ordinary footer tokens, such as `Reviewed-by`. `BREAKING CHANGE` is the specification's special space-containing token and is generated automatically for a breaking commit.
 
-!!! warning
-    The custom-trailer prompt treats every comma as a separator. A custom trailer value cannot itself contain a comma; recommended trailer values are collected separately and do not have this limitation.
+Trailer values are entered separately, so they may contain commas. Custom tokens accept letters, numbers, and hyphens.
 
-The custom prompt also displays the selected type's contextual cautions. These are advice rather than validation failures: for example, `Tested-by` is unusual for `docs`, but can be appropriate when a documentation build was tested.
+The **Add custom trailer…** action also displays the selected type's contextual cautions. These are advice rather than validation failures: for example, `Tested-by` is unusual for `docs`, but can be appropriate when a documentation build was tested.
 
 For `security` commits, do not place undisclosed vulnerability or embargo details in public commit messages. Use the project's private advisory and disclosure process until publication is authorized.

@@ -122,7 +122,7 @@ Rule fields:
 
 ### `contextualConventionalCommits.typeTrailerMatrix`
 
-Maps each type to high-value trailer tokens and contextual cautions. Recommended tokens are offered in a multi-select picker; the composer then asks for each selected value. Custom trailers remain available.
+Maps each type to high-value trailer tokens and contextual cautions. The composer lets users add one recommended or custom token and value at a time, remove mistakes, repeat a token when necessary, and finish without writing a CSV list.
 
 ```json
 {

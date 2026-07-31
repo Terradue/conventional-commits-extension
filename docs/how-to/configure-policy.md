@@ -98,7 +98,7 @@ If a type has no matrix rule, it resolves no predefined scopes but still permits
 
 ## Customize trailer guidance
 
-Use `highValue` to populate the type-specific multi-select trailer picker and `discouraged` to surface cautions beside the custom-trailer prompt. Neither field requires or forbids a trailer. An absent trailer rule simply leaves the recommended picker empty while retaining custom entry.
+Use `highValue` to populate the type-specific incremental trailer picker and `discouraged` to surface cautions on the custom-trailer action. Neither field requires or forbids a trailer. An absent trailer rule simply leaves no recommended tokens while retaining custom entry.
 
 Keep caution text explanatory when a trailer has legitimate exceptions, for example `"Tested-by, except for documentation builds"`. For security fixes under embargo, do not encode private vulnerability details in a public commit message.
 

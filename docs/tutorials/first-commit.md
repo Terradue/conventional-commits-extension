@@ -94,19 +94,21 @@ The body is optional. It should explain motivation or context that is not obviou
 
 ## 8. Link related work with a footer
 
-Enter:
+Select `Refs`, then enter this value:
 
 ```text
-Refs: #123
+#123
 ```
 
-Footers are optional. For multiple footers, separate them with commas, for example:
+The picker returns after adding the trailer. Select **Finish trailers** to continue. Footers are optional; select **Finish trailers** immediately to omit them.
+
+To add more than one footer, choose another recommended token or **Add custom trailer…**, then enter its value. For example, add `Reviewed-by` with this value:
 
 ```text
-Refs: #123, Reviewed-by: A. Developer
+A. Developer
 ```
 
-The extension places each footer on its own line. Do not use a comma inside an individual footer value because commas delimit footers in the current composer.
+The extension places each footer on its own line. You can remove an entry before finishing, repeat a token such as `Co-authored-by`, and use commas inside trailer values.
 
 ## 9. Review the generated message
 

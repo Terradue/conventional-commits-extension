@@ -82,10 +82,10 @@ This rule accepts `build(npm)` and `build(deps)`, requires a scope, rejects `bui
 
 | Field | Type | Default when omitted | Meaning |
 | --- | --- | --- | --- |
-| `highValue` | string array | `[]` | Trailer tokens offered in the type-specific multi-select picker. |
-| `discouraged` | string array | `[]` | Cautions displayed when the composer offers custom trailers. Entries may explain a conditional exception. |
+| `highValue` | string array | `[]` | Trailer tokens offered in the type-specific incremental picker. |
+| `discouraged` | string array | `[]` | Cautions displayed on the custom-trailer action. Entries may explain a conditional exception. |
 
-Values are trimmed and de-duplicated. After selection, the composer collects each recommended trailer value separately and emits one trailer per line. `BREAKING CHANGE` is configured as high-value for `feat`, but the trailer picker omits it because the dedicated breaking-change step generates it together with the header `!` marker.
+Values are trimmed and de-duplicated. The picker remains open while the user adds recommended or custom trailers one at a time. Added trailers can be removed before finishing, and a token can be chosen repeatedly for cases such as multiple co-authors. Every trailer is emitted on its own line. `BREAKING CHANGE` is configured as high-value for `feat`, but the trailer picker omits it because the dedicated breaking-change step generates it together with the header `!` marker.
 
 ```json
 {
