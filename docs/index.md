@@ -1,8 +1,8 @@
-# Terradue Conventional Commits
+# Contextual Conventional Commits
 
 Compose consistent [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) messages without leaving VS Code.
 
-The extension adds a guided composer to VS Code's built-in Git Source Control view. It helps you choose a type and scope, validates the summary against repository policy, records breaking changes, and writes the result into the normal commit message box. Everything runs locally.
+The extension adds a guided composer to VS Code's built-in Git Source Control view. You choose the type first, and the extension then resolves the scopes that make sense for that type from repository policy. It validates the summary, records breaking changes, and writes the result into the normal commit message box. Everything runs locally.
 
 ## Start here
 
@@ -15,7 +15,8 @@ Choose the documentation that matches what you need:
 
 ## What the extension provides
 
-- Guided type, scope, description, body, breaking-change, and footer entry.
+- Contextual type-to-scope selection using reusable groups and per-type rules.
+- Optional or required scopes, exclusions, and control over custom scope entry for each type.
 - Scope suggestions inferred from the top-level folders containing changes.
 - Support for workspaces containing multiple Git repositories.
 - User, workspace, and repository-folder policies through VS Code settings.
@@ -24,4 +25,3 @@ Choose the documentation that matches what you need:
 
 !!! note
     The extension helps apply a configurable project policy based on Conventional Commits. Some defaults—such as a 72-character header, lowercase descriptions, and no final period—are extension policy choices, not requirements of the Conventional Commits specification.
-

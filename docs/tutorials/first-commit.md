@@ -3,7 +3,7 @@
 In this tutorial you will change a file, compose a Conventional Commit through VS Code, inspect the generated message, and commit it. The example produces this message:
 
 ```text
-docs(docs): improve installation instructions
+docs(tutorial): improve installation instructions
 
 Explain how to install a downloaded VSIX.
 
@@ -17,11 +17,11 @@ Allow about five minutes.
 You need:
 
 - VS Code 1.95 or newer;
-- the Terradue Conventional Commits extension [installed](../how-to/install.md);
+- the Contextual Conventional Commits extension [installed](../how-to/install.md);
 - a folder containing a Git repository; and
 - at least one changed file.
 
-If you want to follow the example closely, edit a file inside a top-level `docs` directory. The extension will infer `docs` as a possible scope. Any changed file is suitable, however.
+If you want to follow the example closely, edit a tutorial file. Any changed file is suitable, however.
 
 ## 1. Open Source Control
 
@@ -36,8 +36,8 @@ Staging first makes it clear exactly what the commit will contain. The composer 
 
 Use either of these entry points:
 
-- Open the Command Palette with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (<kbd>⇧</kbd>+<kbd>⌘</kbd>+<kbd>P</kbd> on macOS), type **Git: Compose Conventional Commit**, and press <kbd>Enter</kbd>.
-- Select the **Compose Conventional Commit** checklist icon in the Source Control view.
+- Open the Command Palette with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (<kbd>⇧</kbd>+<kbd>⌘</kbd>+<kbd>P</kbd> on macOS), type **Git: Compose Contextual Conventional Commit**, and press <kbd>Enter</kbd>.
+- Select the **Compose Contextual Conventional Commit** checklist icon in the Source Control view.
 
 If the workspace contains several Git repositories, choose the repository that contains your staged change. With one repository, this step is skipped.
 
@@ -54,9 +54,11 @@ The project policy can offer other types, including `docs`, `test`, `refactor`, 
 
 ## 4. Choose the scope
 
-Select **docs** when it appears in the scope list.
+Select **tutorial** when it appears in the scope list.
 
-A scope identifies the affected part of the codebase and becomes the parenthesised part of the header. The extension lists inferred scopes first, followed by configured scopes. Select **No scope** when the change affects the whole repository or no scope adds useful information.
+A scope identifies the affected part of the codebase and becomes the parenthesised part of the header. Because you selected `docs`, the default policy offers component and documentation scopes such as `readme`, `api`, `tutorial`, and `examples`. It excludes `docs` because `docs(docs)` repeats the type without identifying the affected documentation area.
+
+The extension lists non-excluded scopes inferred from changed directories first, followed by the scopes resolved for the selected type. **No scope** and **Enter custom scope…** appear only when that type's rule allows them.
 
 ## 5. Write the description
 
@@ -113,7 +115,7 @@ After the final prompt, the extension writes the message into the Source Control
 Check that the box contains:
 
 ```text
-docs(docs): improve installation instructions
+docs(tutorial): improve installation instructions
 
 Explain how to install a downloaded VSIX.
 
@@ -135,4 +137,3 @@ You have created a structured commit without manually assembling its syntax.
 - [Configure a shared project policy](../how-to/configure-policy.md).
 - [Record a breaking change](../how-to/breaking-changes-and-footers.md).
 - Review the complete [commit format reference](../reference/commit-format.md).
-

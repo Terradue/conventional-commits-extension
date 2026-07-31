@@ -1,72 +1,159 @@
-# Terradue Conventional Commits
+# Contextual Conventional Commits
 
-A local, policy-driven Conventional Commits composer integrated with VS Code's built-in Git Source Control view.
+A generic VS Code extension that composes Conventional Commit messages through the built-in Git Source Control interface.
+
+Unlike flat scope pickers, this extension resolves scopes **after the commit type is selected**. Repository policy can therefore allow `build(npm)` while rejecting redundant combinations such as `build(build)`.
 
 ## Features
 
-- Guided type, scope, description and breaking-change workflow.
-- Writes the generated message directly into the active Git SCM input box.
-- Optional immediate commit through VS Code's built-in `git.commit` command.
-- Supports multiple repositories in one workspace.
-- Configurable types and scopes at user, workspace or repository-folder level.
-- Infers scope candidates from changed top-level directories.
-- Validates type, header length, description casing and final punctuation.
-- Adds `BREAKING CHANGE:` and arbitrary Git-trailer-style footers.
-- Operates locally and does not transmit repository contents.
+- contextual type-to-scope selection;
+- reusable named scope groups;
+- explicit per-type scopes and exclusions;
+- optional or required scopes per type;
+- configurable custom-scope entry;
+- changed-directory scope inference;
+- Conventional Commit formatting and validation;
+- breaking-change body and Git trailers;
+- multi-repository workspace support;
+- no runtime dependencies and no source-code transmission.
+
+## Commands
+
+- **Git: Compose Contextual Conventional Commit**
+- **Git: Validate Conventional Commit**
+- **Git: Compose and Commit**
+
+## Example
+
+Given this policy:
+
+```json
+{
+  "contextualConventionalCommits.scopeGroups": {
+    "build-tools": ["docker", "vite"],
+    "package-managers": ["npm", "pnpm", "uv"]
+  },
+  "contextualConventionalCommits.typeScopeMatrix": {
+    "build": {
+      "groups": ["build-tools", "package-managers"],
+      "scopes": ["deps", "packaging"],
+      "exclude": ["build", "ci"],
+      "allowNone": true,
+      "allowCustom": false
+    }
+  }
+}
+```
+
+The extension offers:
+
+```text
+build(docker)
+build(vite)
+build(npm)
+build(pnpm)
+build(uv)
+build(deps)
+build(packaging)
+```
+
+It rejects:
+
+```text
+build(build)
+build(ci)
+build(api)
+```
+
+## Configuration model
+
+### `contextualConventionalCommits.types`
+
+Defines the available commit types and their descriptions.
+
+### `contextualConventionalCommits.scopeGroups`
+
+Defines reusable named arrays of scopes:
+
+```json
+{
+  "contextualConventionalCommits.scopeGroups": {
+    "components": ["api", "cli", "parser", "server"],
+    "platforms": ["linux", "windows", "macos"],
+    "ci-providers": ["github-actions", "gitlab", "jenkins"]
+  }
+}
+```
+
+### `contextualConventionalCommits.typeScopeMatrix`
+
+Maps each type to its contextual scope policy:
+
+```json
+{
+  "contextualConventionalCommits.typeScopeMatrix": {
+    "feat": {
+      "groups": ["components"],
+      "exclude": ["feat", "feature", "new"],
+      "allowNone": true,
+      "allowCustom": true
+    },
+    "ci": {
+      "groups": ["ci-providers"],
+      "scopes": ["lint", "release", "test"],
+      "exclude": ["ci"],
+      "allowNone": true,
+      "allowCustom": false
+    }
+  }
+}
+```
+
+Rule fields:
+
+| Field | Meaning |
+|---|---|
+| `groups` | Named scope groups to expand |
+| `scopes` | Scopes defined directly for this type |
+| `exclude` | Redundant or forbidden scopes |
+| `allowNone` | Whether an unscoped commit is accepted |
+| `allowCustom` | Whether users may enter a scope outside the resolved list |
+
+## Recommended semantic model
+
+The **type** answers what kind of change occurred. The **scope** identifies which package, subsystem, component, platform, or artefact is affected.
+
+Good examples:
+
+```text
+feat(api): add batch endpoint
+fix(parser): handle escaped names
+build(pnpm): update lockfile
+ci(github-actions): publish release assets
+docs(cli): document authentication options
+```
+
+Redundant examples rejected by the default policy:
+
+```text
+feat(feature): add export
+fix(bug): handle null value
+build(build): update tooling
+ci(ci): adjust workflow
+docs(docs): improve guide
+```
+
+See [`docs/type-scope-best-practices.md`](docs/type-scope-best-practices.md) for the consolidated matrix.
 
 ## Development
 
 ```bash
 npm install
 npm run check
-```
-
-Open the project in VS Code and press **F5** to start an Extension Development Host.
-
-## Package and install
-
-```bash
 npm run package
-code --install-extension terradue-conventional-commits-0.1.0.vsix
 ```
 
-## Usage
-
-Open a Git repository, stage or modify files, and invoke **Git: Compose Conventional Commit** from the Command Palette or the Source Control title bar. The generated message is placed in the normal Git commit input.
-
-## Documentation
-
-The documentation follows the [Diátaxis](https://diataxis.fr/) structure and includes a detailed [first-commit tutorial](docs/tutorials/first-commit.md), task-oriented guides, reference material and explanation.
-
-Build and preview it locally with:
-
-```bash
-python3 -m pip install -r requirements-docs.txt
-mkdocs serve
-```
-
-## Example configuration
-
-```json
-{
-  "terradueConventionalCommits.types": [
-    { "name": "feat", "description": "Introduce new functionality" },
-    { "name": "fix", "description": "Correct defective behaviour" },
-    { "name": "schema", "description": "Modify API or metadata contracts" },
-    { "name": "docs", "description": "Change documentation only" }
-  ],
-  "terradueConventionalCommits.scopes": [
-    "openapi", "arazzo", "asyncapi", "cwl", "stac", "cli", "release"
-  ],
-  "terradueConventionalCommits.headerMaxLength": 72,
-  "terradueConventionalCommits.inferScopesFromChangedFiles": true,
-  "terradueConventionalCommits.commitAfterCompose": false
-}
-```
-
-## Current limitations
-
-The first release intentionally avoids evaluating arbitrary JavaScript-based `commitlint.config.*` files. Repository policy is expressed through VS Code resource-scoped settings, which can be committed in `.vscode/settings.json`.
+The extension requires VS Code 1.95 or newer.
 
 ## License
 

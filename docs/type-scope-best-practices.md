@@ -31,3 +31,5 @@ Conventional Commits standardizes the message structure but does not prescribe a
 | `feat(cli): add JSON output` | `feat(feature): add JSON output` |
 
 The bundled policy is intentionally generic. Projects can replace or extend every group and rule through workspace settings.
+
+In `contextualConventionalCommits.typeScopeMatrix`, express the representative values through `groups` and `scopes`, place the discouraged values in `exclude`, and use `allowNone` and `allowCustom` to choose how strict each type should be. See [Configure a team policy](how-to/configure-policy.md) for a complete example.

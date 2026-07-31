@@ -2,7 +2,7 @@
 
 ## Mark a breaking change
 
-1. Run **Git: Compose Conventional Commit** or **Git: Compose and Commit**.
+1. Run **Git: Compose Contextual Conventional Commit** or **Git: Compose and Commit**.
 2. Select the type and scope, then enter the description.
 3. At **Conventional Commit: breaking change?**, select **Yes**.
 4. Describe what consumers must do differently. Be specific about migration, replacement, or removed behavior.
@@ -40,4 +40,3 @@ Use hyphens instead of spaces in ordinary footer tokens, such as `Reviewed-by`. 
 
 !!! warning
     The current prompt treats every comma as a footer separator. A footer value cannot itself contain a comma when composed through the extension.
-

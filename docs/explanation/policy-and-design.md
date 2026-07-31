@@ -1,6 +1,6 @@
 # Policy and design
 
-Terradue Conventional Commits is a thin interaction layer over VS Code's built-in Git support. Its design keeps composition close to the place where developers already inspect and commit changes.
+Contextual Conventional Commits is a thin interaction layer over VS Code's built-in Git support. Its design keeps composition close to the place where developers already inspect and commit changes.
 
 ## Local and repository-aware
 
@@ -12,7 +12,15 @@ No repository contents or commit messages are sent to an external service. Scope
 
 VS Code settings can apply to a user, workspace, or individual workspace folder. The extension resolves policy against the selected repository, which gives a multi-root workspace the right configuration for each project.
 
-This makes `.vscode/settings.json` the practical policy boundary: a repository can share types, scopes, and style constraints without executing code. The current release intentionally does not evaluate JavaScript-based `commitlint.config.*` files.
+This makes `.vscode/settings.json` the practical policy boundary: a repository can share types, contextual scope rules, and style constraints without executing code. The current release intentionally does not evaluate JavaScript-based `commitlint.config.*` files.
+
+## Scope is contextual, not a flat list
+
+The type and scope describe different dimensions: the type says what kind of change occurred, while the scope identifies the package, subsystem, component, platform, or artefact affected. The composer therefore asks for the type before it offers a scope.
+
+Each type can reuse named scope groups, add direct scopes, exclude redundant pairings, require a scope, and decide whether an unlisted custom scope is acceptable. This makes pairings such as `build(npm)` available without encouraging `build(build)`, and lets a strict project reject `build(api)` when `api` is not part of its build policy.
+
+Rules omitted from `typeScopeMatrix` remain permissive: no configured scopes are resolved, but an unscoped or custom-scoped commit is allowed by default. This prevents adding a custom type from silently making it unusable.
 
 ## Composition and validation are separate
 
@@ -23,4 +31,3 @@ Validation is intentionally policy-focused. It checks the header grammar and the
 ## Commit remains under user control
 
 By default, composition fills the commit box and stops. This gives the user a final opportunity to inspect staged files and edit the message. Teams or individuals who prefer a shorter flow can enable `commitAfterCompose`, while the explicit **Compose and Commit** command always requests an immediate Git commit.
-

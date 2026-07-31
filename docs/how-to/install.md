@@ -10,7 +10,7 @@
 6. Select the downloaded file and confirm the installation.
 7. Reload VS Code if prompted.
 
-Open the Command Palette and search for **Git: Compose Conventional Commit** to confirm that the extension is active.
+Open the Command Palette and search for **Git: Compose Contextual Conventional Commit** to confirm that the extension is active.
 
 ## Install from the command line
 
@@ -29,7 +29,7 @@ From a checkout of the project:
 ```bash
 npm install
 npm run package
-code --install-extension ./terradue-conventional-commits-0.1.0.vsix
+code --install-extension ./contextual-conventional-commits-0.1.0.vsix
 ```
 
 The package command compiles, lints, tests, and packages the extension before producing the VSIX.
@@ -37,5 +37,4 @@ The package command compiles, lints, tests, and packages the extension before pr
 ## Update or remove it
 
 - To update from a VSIX, download the newer asset and repeat **Extensions: Install from VSIX...**.
-- To remove it, open **Extensions**, find **Terradue Conventional Commits**, select the gear menu, and choose **Uninstall**.
-
+- To remove it, open **Extensions**, find **Contextual Conventional Commits**, select the gear menu, and choose **Uninstall**.

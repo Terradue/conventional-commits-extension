@@ -7,7 +7,7 @@
 3. Run **Git: Validate Conventional Commit** from the Command Palette, or select **Validate Conventional Commit** beside the commit box.
 4. Correct each error shown by VS Code and validate again.
 
-Validation checks the header format, configured type, scope whitespace, header length, description casing, and final punctuation. See [Commit format](../reference/commit-format.md) for the exact rules.
+Validation checks the header format, configured type, the selected type's scope policy, scope whitespace, header length, description casing, and final punctuation. See [Commit format](../reference/commit-format.md) for the exact rules.
 
 ## Fix common errors
 
@@ -21,7 +21,19 @@ Open **Extensions**, search for `@builtin git`, and make sure **Git** is enabled
 
 ### Unknown type
 
-Choose one of the configured types, or add the required type to `terradueConventionalCommits.types` at the appropriate settings level.
+Choose one of the configured types, or add the required type to `contextualConventionalCommits.types` at the appropriate settings level.
+
+### Type requires a scope
+
+The type's matrix rule sets `allowNone` to `false`. Choose one of its resolved scopes or, when `allowCustom` is enabled, enter a custom one.
+
+### Scope is redundant or forbidden for this type
+
+The scope occurs in the type's `exclude` list. Choose a scope that identifies the affected area rather than repeating the type: for example, use `build(npm)` instead of `build(build)`.
+
+### Scope is not allowed for this type
+
+The type sets `allowCustom` to `false`, and the scope is not resolved from its groups or direct scopes. Add it to the appropriate group or the rule's `scopes`, or choose an allowed value.
 
 ### Scope must not contain whitespace
 
@@ -41,5 +53,4 @@ In a multi-repository workspace, rerun the command and select the repository con
 
 ### Composition commits immediately
 
-Set `terradueConventionalCommits.commitAfterCompose` to `false`, or use **Git: Compose Conventional Commit** rather than **Git: Compose and Commit**. The latter always invokes VS Code's Git commit command after composing.
-
+Set `contextualConventionalCommits.commitAfterCompose` to `false`, or use **Git: Compose Contextual Conventional Commit** rather than **Git: Compose and Commit**. The latter always invokes VS Code's Git commit command after composing.

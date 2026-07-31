@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-site_name: Terradue Conventional Commits - VSCode Extension
-site_description: Documentation for the Terradue Conventional Commits VS Code extension
+site_name: Contextual Conventional Commits - VS Code Extension
+site_description: Documentation for the Contextual Conventional Commits VS Code extension
 site_url: https://terradue.github.io/conventional-commits-extension/
 repo_url: https://github.com/Terradue/conventional-commits-extension
 repo_name: Terradue/conventional-commits-extension
@@ -113,6 +113,7 @@ nav:
       - Commit format: reference/commit-format.md
       - Commands: reference/commands.md
       - Settings: reference/settings.md
+      - Type-to-scope best practices: type-scope-best-practices.md
   - Explanation:
       - Why Conventional Commits?: explanation/why-conventional-commits.md
       - Policy and design: explanation/policy-and-design.md

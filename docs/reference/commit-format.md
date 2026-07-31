@@ -14,8 +14,8 @@ The extension generates messages based on [Conventional Commits 1.0.0](https://w
 
 | Element | Required | Extension behavior |
 | --- | --- | --- |
-| Type | Yes | Selected from `terradueConventionalCommits.types`. |
-| Scope | No | Selected from inferred and configured scopes, enclosed in parentheses. |
+| Type | Yes | Selected from `contextualConventionalCommits.types`. |
+| Scope | Policy-dependent | Resolved after the type is selected and enclosed in parentheses. A type can allow, require, or effectively prohibit a scope. |
 | `!` | No | Added when **breaking change** is **Yes**. |
 | Description | Yes | Validated while it is entered. |
 | Body | No | Collected in one input field and separated from the header by a blank line. |
@@ -34,11 +34,26 @@ where scope and `!` are optional. It then applies the active policy:
 
 - type must occur in the configured type list;
 - scope must not contain whitespace;
+- an absent scope is rejected when the selected type sets `allowNone` to `false`;
+- scopes listed in the selected type's `exclude` rule are rejected;
+- when `allowCustom` is `false`, the scope must occur in the list resolved for that type;
 - the header must not exceed `headerMaxLength`;
 - the description must start lowercase when `requireLowercaseDescription` is enabled; and
 - the description must not end in a period unless `allowFinalPeriod` is enabled.
 
 The last three rules are extension policy defaults, not Conventional Commits requirements.
+
+## How scope policy is resolved
+
+For the header's type, the extension:
+
+1. reads its rule from `typeScopeMatrix` (or uses an empty rule when none exists);
+2. expands every named entry in `groups` from `scopeGroups`;
+3. appends the rule's direct `scopes` and removes duplicates and blank values;
+4. removes every value named in `exclude`; and
+5. defaults both `allowNone` and `allowCustom` to `true` when omitted.
+
+An unknown group contributes no scopes. See [Settings](settings.md) for the complete schema.
 
 ## Examples
 
@@ -64,4 +79,3 @@ Refs: #42
 - The body prompt is a single VS Code input field, so the composer does not create a multi-paragraph body.
 - Commas delimit footer entries, so an individual footer value cannot contain a comma.
 - Validation checks the header and project policy; it is not a complete parser for every body and footer rule in the Conventional Commits specification.
-
