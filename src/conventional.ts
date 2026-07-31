@@ -31,7 +31,12 @@ export function resolveTrailerPolicy(type: string, policy: CommitPolicy): Resolv
   const rule = policy.typeTrailerMatrix[type] ?? {};
   return {
     highValue: normalize(rule.highValue ?? []),
-    discouraged: normalize(rule.discouraged ?? [])
+    discouraged: normalize(rule.discouraged ?? []),
+    descriptions: Object.fromEntries(
+      Object.entries(policy.trailerDescriptions)
+        .map(([token, description]) => [token.trim(), description.trim()])
+        .filter(([token, description]) => token && description)
+    )
   };
 }
 

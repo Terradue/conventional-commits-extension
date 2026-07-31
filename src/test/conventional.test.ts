@@ -28,6 +28,12 @@ const policy: CommitPolicy = {
       discouraged: ['Fixes referring to a causal commit']
     }
   },
+  trailerDescriptions: {
+    Refs: ' Related work that does not imply completion ',
+    'Tested-by': 'Names a person who successfully tested the change',
+    '': 'ignored',
+    Empty: '   '
+  },
   headerMaxLength: 72,
   requireLowercaseDescription: true,
   allowFinalPeriod: false
@@ -49,13 +55,22 @@ test('resolves reusable scope groups for a type', () => {
 test('resolves and normalizes contextual trailers for a type', () => {
   assert.deepEqual(resolveTrailerPolicy('feat', policy), {
     highValue: ['Refs', 'BREAKING CHANGE', 'Tested-by'],
-    discouraged: ['Fixes referring to a causal commit']
+    discouraged: ['Fixes referring to a causal commit'],
+    descriptions: {
+      Refs: 'Related work that does not imply completion',
+      'Tested-by': 'Names a person who successfully tested the change'
+    }
   });
 });
 
 test('uses an empty permissive trailer policy for an unknown type', () => {
   assert.deepEqual(resolveTrailerPolicy('custom', policy), {
-    highValue: [], discouraged: []
+    highValue: [],
+    discouraged: [],
+    descriptions: {
+      Refs: 'Related work that does not imply completion',
+      'Tested-by': 'Names a person who successfully tested the change'
+    }
   });
 });
 

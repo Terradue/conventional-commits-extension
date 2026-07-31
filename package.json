@@ -109,6 +109,50 @@
             "additionalProperties": false
           }
         },
+        "contextualConventionalCommits.trailerDescriptions": {
+          "type": "object",
+          "scope": "resource",
+          "description": "Short meanings shown beside Git trailer tokens. Git defines the trailer format, while projects and hosting platforms define token semantics.",
+          "default": {
+            "Refs": "Related issue, ticket, commit, or document; does not imply completion",
+            "Implements": "Requirement or blueprint fully implemented by this change",
+            "Implements-blueprint": "Blueprint implemented by this change; use only when the project recognizes this token",
+            "Spec": "Specification or design document governing the change",
+            "Release-note": "User-facing release note text or a reference to its source",
+            "Release-note-none": "Explicitly states that no user-facing release note is needed",
+            "BREAKING CHANGE": "Incompatible behavior and the migration required from consumers",
+            "Co-authored-by": "Additional author of the change; use Name <email>",
+            "Co-developed-by": "Person who jointly developed the change; use Name <email>",
+            "Tested-by": "Person who successfully tested the change; use Name <email>",
+            "Reviewed-by": "Person who reviewed the change and found it acceptable; use Name <email>",
+            "Reported-by": "Person who originally found and reported the defect; use Name <email>",
+            "Fixes": "Issue or causal commit whose defect this change corrects",
+            "Closes": "Issue or report fully resolved by this change; may trigger automatic closure",
+            "Link": "URL to the relevant report, discussion, review, or supporting evidence",
+            "CVE": "Public CVE identifier for the vulnerability, such as CVE-2026-1234",
+            "GHSA": "GitHub Security Advisory identifier, such as GHSA-xxxx-xxxx-xxxx",
+            "Security-impact": "Security implications or impact addressed by the change",
+            "Backport-to": "Target stable branch or release that should receive this change",
+            "Benchmark": "Benchmark command, result, or report demonstrating performance impact",
+            "Depends-on": "Change or dependency that must land before this change",
+            "Test-results": "Observed automated or manual test results for the change",
+            "Test": "Exact manual test or command used to verify the change",
+            "Test-plan": "Checks that reviewers or CI should perform to validate the change",
+            "Coverage": "Coverage result or report affected by the tests in this change",
+            "Generated-by": "Tool and version that generated the committed content",
+            "Dependency": "Dependency name, version, or constraint affected by the change",
+            "Dependency-update": "Dependency and version transition performed by the change",
+            "Upstream": "Upstream commit, issue, release, or source from which the change derives",
+            "Build": "Build tool, job, artifact, or result associated with the change",
+            "CI": "Continuous-integration workflow, job, or run associated with the change",
+            "No-changelog": "Explicitly omits this change from generated changelog entries",
+            "Reverts": "Commit or change intentionally undone by this commit"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "contextualConventionalCommits.typeTrailerMatrix": {
           "type": "object",
           "scope": "resource",

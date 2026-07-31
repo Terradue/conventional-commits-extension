@@ -12,6 +12,7 @@ import type {
   CommitPolicy,
   CommitType,
   ScopeGroups,
+  TrailerDescriptions,
   TypeScopeMatrix,
   TypeTrailerMatrix
 } from './model';
@@ -25,6 +26,7 @@ function getPolicy(resource?: vscode.Uri): CommitPolicy {
     scopeGroups: configuration.get<ScopeGroups>('scopeGroups', {}),
     typeScopeMatrix: configuration.get<TypeScopeMatrix>('typeScopeMatrix', {}),
     typeTrailerMatrix: configuration.get<TypeTrailerMatrix>('typeTrailerMatrix', {}),
+    trailerDescriptions: configuration.get<TrailerDescriptions>('trailerDescriptions', {}),
     headerMaxLength: configuration.get<number>('headerMaxLength', 72),
     requireLowercaseDescription: configuration.get<boolean>('requireLowercaseDescription', true),
     allowFinalPeriod: configuration.get<boolean>('allowFinalPeriod', false)
@@ -39,9 +41,10 @@ async function selectTrailers(type: string, policy: CommitPolicy): Promise<reado
   type TrailerPick = vscode.QuickPickItem & { action: TrailerAction; token?: string };
 
   async function addTrailer(token: string): Promise<boolean> {
+    const meaning = trailerPolicy.descriptions[token];
     const value = await vscode.window.showInputBox({
       title: `${token} trailer`,
-      prompt: `Enter the value for ${token}`,
+      prompt: meaning ? `${meaning}. Enter the value for ${token}` : `Enter the value for ${token}`,
       placeHolder: token === 'Co-authored-by' || token === 'Tested-by' || token === 'Reviewed-by'
         ? 'Name <email@example.com>'
         : '#123 or project-specific value',
@@ -57,9 +60,10 @@ async function selectTrailers(type: string, policy: CommitPolicy): Promise<reado
       .filter((token) => token !== 'BREAKING CHANGE')
       .map((token) => {
         const count = trailers.filter((trailer) => trailer.startsWith(`${token}:`)).length;
+        const meaning = trailerPolicy.descriptions[token] ?? `Project-defined trailer recommended for ${type}`;
         return {
           label: token,
-          description: count > 0 ? `recommended for ${type} · added ${count}` : `recommended for ${type}`,
+          description: count > 0 ? `${meaning} · added ${count}` : meaning,
           action: 'add',
           token
         };
@@ -205,7 +209,7 @@ async function compose(repository: GitRepository): Promise<string | undefined> {
 
   const trailerPolicy = resolveTrailerPolicy(type, policy);
   const breakingGuidance = trailerPolicy.highValue.includes('BREAKING CHANGE')
-    ? `Recommended for incompatible ${type} changes`
+    ? trailerPolicy.descriptions['BREAKING CHANGE'] ?? `Recommended for incompatible ${type} changes`
     : trailerPolicy.discouraged.find((item) => item.startsWith('BREAKING CHANGE'))
       ?? 'Mark the commit as introducing a breaking change';
   const breakingChoice = await vscode.window.showQuickPick(
