@@ -1,192 +1,112 @@
 {
-  "name": "terradue-conventional-commits",
-  "displayName": "Terradue Conventional Commits",
-  "description": "Policy-driven Conventional Commits composer integrated with VS Code Git source control.",
+  "name": "contextual-conventional-commits",
+  "displayName": "Contextual Conventional Commits",
+  "description": "A generic, policy-driven Conventional Commits composer with contextual type-to-scope selection for VS Code Git.",
   "version": "0.1.0",
-  "publisher": "terradue",
+  "publisher": "local",
   "license": "Apache-2.0",
-  "engines": {
-    "vscode": "^1.95.0"
-  },
-  "categories": [
-    "Source Control"
-  ],
-  "keywords": [
-    "git",
-    "conventional commits",
-    "commitlint",
-    "source control"
-  ],
+  "engines": { "vscode": "^1.95.0" },
+  "categories": ["Source Control"],
+  "keywords": ["git", "conventional commits", "commitlint", "source control", "scope matrix"],
   "activationEvents": [
-    "onCommand:terradueConventionalCommits.compose",
-    "onCommand:terradueConventionalCommits.validate",
-    "onCommand:terradueConventionalCommits.commit"
+    "onCommand:contextualConventionalCommits.compose",
+    "onCommand:contextualConventionalCommits.validate",
+    "onCommand:contextualConventionalCommits.commit"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "terradueConventionalCommits.compose",
-        "title": "Compose Conventional Commit",
-        "category": "Git",
-        "icon": "$(checklist)"
-      },
-      {
-        "command": "terradueConventionalCommits.validate",
-        "title": "Validate Conventional Commit",
-        "category": "Git",
-        "icon": "$(pass)"
-      },
-      {
-        "command": "terradueConventionalCommits.commit",
-        "title": "Compose and Commit",
-        "category": "Git",
-        "icon": "$(git-commit)"
-      }
+      { "command": "contextualConventionalCommits.compose", "title": "Compose Contextual Conventional Commit", "category": "Git", "icon": "$(checklist)" },
+      { "command": "contextualConventionalCommits.validate", "title": "Validate Conventional Commit", "category": "Git", "icon": "$(pass)" },
+      { "command": "contextualConventionalCommits.commit", "title": "Compose and Commit", "category": "Git", "icon": "$(git-commit)" }
     ],
     "menus": {
-      "scm/title": [
-        {
-          "command": "terradueConventionalCommits.compose",
-          "when": "scmProvider == git",
-          "group": "navigation@8"
-        }
-      ],
+      "scm/title": [{ "command": "contextualConventionalCommits.compose", "when": "scmProvider == git", "group": "navigation@8" }],
       "scm/inputBox": [
-        {
-          "command": "terradueConventionalCommits.compose",
-          "when": "scmProvider == git",
-          "group": "navigation@1"
-        },
-        {
-          "command": "terradueConventionalCommits.validate",
-          "when": "scmProvider == git",
-          "group": "navigation@2"
-        }
-      ],
-      "commandPalette": [
-        {
-          "command": "terradueConventionalCommits.compose"
-        },
-        {
-          "command": "terradueConventionalCommits.validate"
-        },
-        {
-          "command": "terradueConventionalCommits.commit"
-        }
+        { "command": "contextualConventionalCommits.compose", "when": "scmProvider == git", "group": "navigation@1" },
+        { "command": "contextualConventionalCommits.validate", "when": "scmProvider == git", "group": "navigation@2" }
       ]
     },
     "configuration": {
-      "title": "Terradue Conventional Commits",
+      "title": "Contextual Conventional Commits",
       "properties": {
-        "terradueConventionalCommits.types": {
+        "contextualConventionalCommits.types": {
           "type": "array",
           "scope": "resource",
           "default": [
-            {
-              "name": "feat",
-              "description": "Introduce new functionality"
-            },
-            {
-              "name": "fix",
-              "description": "Correct defective behaviour"
-            },
-            {
-              "name": "docs",
-              "description": "Change documentation only"
-            },
-            {
-              "name": "style",
-              "description": "Change formatting without behavioural changes"
-            },
-            {
-              "name": "refactor",
-              "description": "Restructure code without changing behaviour"
-            },
-            {
-              "name": "perf",
-              "description": "Improve performance"
-            },
-            {
-              "name": "test",
-              "description": "Add or correct tests"
-            },
-            {
-              "name": "build",
-              "description": "Change build system or dependencies"
-            },
-            {
-              "name": "ci",
-              "description": "Change continuous integration configuration"
-            },
-            {
-              "name": "chore",
-              "description": "Perform repository maintenance"
-            },
-            {
-              "name": "revert",
-              "description": "Revert a previous commit"
-            }
+            { "name": "feat", "description": "Introduce new functionality" },
+            { "name": "fix", "description": "Correct defective behaviour" },
+            { "name": "perf", "description": "Improve performance" },
+            { "name": "refactor", "description": "Restructure code without changing behaviour" },
+            { "name": "docs", "description": "Change documentation only" },
+            { "name": "test", "description": "Add or correct tests" },
+            { "name": "build", "description": "Change the build system or dependencies" },
+            { "name": "ci", "description": "Change continuous integration configuration" },
+            { "name": "style", "description": "Change formatting without behavioural changes" },
+            { "name": "chore", "description": "Perform repository maintenance" },
+            { "name": "revert", "description": "Revert a previous commit" }
           ],
           "items": {
             "type": "object",
-            "required": [
-              "name",
-              "description"
-            ],
+            "required": ["name", "description"],
             "properties": {
-              "name": {
-                "type": "string",
-                "pattern": "^[a-z][a-z0-9-]*$"
-              },
-              "description": {
-                "type": "string"
-              }
+              "name": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "description": { "type": "string" }
             }
           }
         },
-        "terradueConventionalCommits.scopes": {
-          "type": "array",
+        "contextualConventionalCommits.scopeGroups": {
+          "type": "object",
           "scope": "resource",
-          "default": [
-            "api",
-            "openapi",
-            "arazzo",
-            "asyncapi",
-            "cwl",
-            "stac",
-            "cli",
-            "docs",
-            "build",
-            "release"
-          ],
-          "items": {
-            "type": "string"
+          "description": "Reusable named groups of scopes referenced by typeScopeMatrix rules.",
+          "default": {
+            "components": ["api", "cli", "client", "core", "parser", "server", "ui"],
+            "platforms": ["linux", "windows", "macos", "android", "ios"],
+            "build-tools": ["docker", "gradle", "maven", "webpack", "vite", "esbuild"],
+            "package-managers": ["npm", "pnpm", "yarn", "pip", "uv", "cargo"],
+            "ci-providers": ["github-actions", "gitlab", "jenkins", "circleci", "azure-pipelines"],
+            "documentation": ["readme", "api", "tutorial", "examples", "contributing"],
+            "test-layers": ["unit", "integration", "e2e", "fixtures"]
+          },
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^[^\\s()]+$" }
           }
         },
-        "terradueConventionalCommits.inferScopesFromChangedFiles": {
-          "type": "boolean",
-          "default": true,
-          "description": "Offer top-level changed directories as scope candidates."
+        "contextualConventionalCommits.typeScopeMatrix": {
+          "type": "object",
+          "scope": "resource",
+          "description": "Type-dependent scope rules. Each key is a commit type.",
+          "default": {
+            "feat": { "groups": ["components"], "exclude": ["feat", "feature", "new"], "allowNone": true, "allowCustom": true },
+            "fix": { "groups": ["components", "platforms"], "exclude": ["fix", "bug", "issue"], "allowNone": true, "allowCustom": true },
+            "perf": { "groups": ["components"], "scopes": ["cache", "database", "renderer", "transport"], "exclude": ["perf", "performance", "speed"], "allowNone": true, "allowCustom": true },
+            "refactor": { "groups": ["components"], "exclude": ["refactor", "code", "cleanup"], "allowNone": true, "allowCustom": true },
+            "docs": { "groups": ["components", "documentation"], "exclude": ["docs", "documentation"], "allowNone": true, "allowCustom": true },
+            "test": { "groups": ["components", "test-layers"], "exclude": ["test", "tests"], "allowNone": true, "allowCustom": true },
+            "build": { "groups": ["build-tools", "package-managers"], "scopes": ["deps", "packaging"], "exclude": ["build", "ci"], "allowNone": true, "allowCustom": true },
+            "ci": { "groups": ["ci-providers"], "scopes": ["lint", "release", "test"], "exclude": ["ci"], "allowNone": true, "allowCustom": true },
+            "style": { "groups": ["components"], "scopes": ["prettier", "eslint", "ruff"], "exclude": ["style", "formatting"], "allowNone": true, "allowCustom": true },
+            "chore": { "scopes": ["repo", "metadata", "templates", "owners"], "exclude": ["chore", "ci", "docs"], "allowNone": true, "allowCustom": true },
+            "revert": { "exclude": ["revert"], "allowNone": true, "allowCustom": false }
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "groups": { "type": "array", "items": { "type": "string" } },
+              "scopes": { "type": "array", "items": { "type": "string", "pattern": "^[^\\s()]+$" } },
+              "exclude": { "type": "array", "items": { "type": "string", "pattern": "^[^\\s()]+$" } },
+              "allowNone": { "type": "boolean" },
+              "allowCustom": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
         },
-        "terradueConventionalCommits.headerMaxLength": {
-          "type": "integer",
-          "default": 72,
-          "minimum": 20
-        },
-        "terradueConventionalCommits.requireLowercaseDescription": {
-          "type": "boolean",
-          "default": true
-        },
-        "terradueConventionalCommits.allowFinalPeriod": {
-          "type": "boolean",
-          "default": false
-        },
-        "terradueConventionalCommits.commitAfterCompose": {
-          "type": "boolean",
-          "default": false,
-          "description": "Commit immediately after composing instead of only filling the SCM input box."
-        }
+        "contextualConventionalCommits.inferScopesFromChangedFiles": { "type": "boolean", "default": true, "description": "Prioritize top-level changed directories as scope candidates when compatible with the selected type." },
+        "contextualConventionalCommits.headerMaxLength": { "type": "integer", "default": 72, "minimum": 20 },
+        "contextualConventionalCommits.requireLowercaseDescription": { "type": "boolean", "default": true },
+        "contextualConventionalCommits.allowFinalPeriod": { "type": "boolean", "default": false },
+        "contextualConventionalCommits.commitAfterCompose": { "type": "boolean", "default": false, "description": "Commit immediately after composing instead of only filling the SCM input box." }
       }
     }
   },
@@ -199,12 +119,11 @@
     "package": "npm run check && vsce package"
   },
   "devDependencies": {
-    "@eslint/js": "^9.16.0",
-    "@types/node": "^26.1.2",
+    "@types/node": "^22.10.0",
     "@types/vscode": "^1.95.0",
-    "@vscode/vsce": "^3.9.2",
+    "@vscode/vsce": "^3.2.1",
     "eslint": "^9.16.0",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.65.0"
+    "typescript-eslint": "^8.18.0"
   }
 }

@@ -1,23 +1,43 @@
-import type { CommitDraft, CommitPolicy } from './model';
+import type {
+  CommitDraft,
+  CommitPolicy,
+  ResolvedScopePolicy,
+  TypeScopeRule
+} from './model';
 
 const HEADER_PATTERN = /^(?<type>[a-z][a-z0-9-]*)(?:\((?<scope>[^()\r\n]+)\))?(?<breaking>!)?: (?<description>[^\r\n]+)$/;
+
+function normalize(values: readonly string[]): readonly string[] {
+  return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
+}
+
+export function resolveScopePolicy(type: string, policy: CommitPolicy): ResolvedScopePolicy {
+  const rule: TypeScopeRule = policy.typeScopeMatrix[type] ?? {};
+  const grouped = (rule.groups ?? []).flatMap((group) => policy.scopeGroups[group] ?? []);
+  const excluded = normalize(rule.exclude ?? []);
+  const scopes = normalize([...grouped, ...(rule.scopes ?? [])])
+    .filter((scope) => !excluded.includes(scope));
+
+  return {
+    scopes,
+    excluded,
+    allowNone: rule.allowNone ?? true,
+    allowCustom: rule.allowCustom ?? true
+  };
+}
 
 export function formatCommit(draft: CommitDraft): string {
   const scope = draft.scope ? `(${draft.scope})` : '';
   const breaking = draft.breaking ? '!' : '';
   const parts = [`${draft.type}${scope}${breaking}: ${draft.description}`];
 
-  if (draft.body?.trim()) {
-    parts.push(draft.body.trim());
-  }
+  if (draft.body?.trim()) parts.push(draft.body.trim());
 
   const footers = [...draft.footers];
   if (draft.breakingDescription?.trim()) {
     footers.unshift(`BREAKING CHANGE: ${draft.breakingDescription.trim()}`);
   }
-  if (footers.length > 0) {
-    parts.push(footers.join('\n'));
-  }
+  if (footers.length > 0) parts.push(footers.join('\n'));
 
   return parts.join('\n\n');
 }
@@ -35,9 +55,20 @@ export function validateCommit(message: string, policy: CommitPolicy): readonly 
   if (!policy.types.some((item) => item.name === type)) {
     errors.push(`Unknown type "${type}".`);
   }
-  if (scope && /\s/.test(scope)) {
-    errors.push('Scope must not contain whitespace.');
+
+  const scopePolicy = resolveScopePolicy(type, policy);
+  if (!scope && !scopePolicy.allowNone) {
+    errors.push(`Type "${type}" requires a scope.`);
   }
+  if (scope) {
+    if (/\s/.test(scope)) errors.push('Scope must not contain whitespace.');
+    if (scopePolicy.excluded.includes(scope)) {
+      errors.push(`Scope "${scope}" is redundant or forbidden for type "${type}".`);
+    } else if (!scopePolicy.allowCustom && !scopePolicy.scopes.includes(scope)) {
+      errors.push(`Scope "${scope}" is not allowed for type "${type}".`);
+    }
+  }
+
   if (header.length > policy.headerMaxLength) {
     errors.push(`Header is ${header.length} characters; maximum is ${policy.headerMaxLength}.`);
   }

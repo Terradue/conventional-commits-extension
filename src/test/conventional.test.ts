@@ -1,35 +1,51 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { formatCommit, validateCommit } from '../conventional';
+import { formatCommit, resolveScopePolicy, validateCommit } from '../conventional';
 import type { CommitPolicy } from '../model';
 
 const policy: CommitPolicy = {
   types: [
     { name: 'feat', description: 'Feature' },
-    { name: 'fix', description: 'Fix' }
+    { name: 'build', description: 'Build' }
   ],
-  scopes: ['api'],
+  scopeGroups: {
+    components: ['api', 'parser'],
+    tools: ['npm', 'docker']
+  },
+  typeScopeMatrix: {
+    feat: { groups: ['components'], exclude: ['feat'], allowNone: true, allowCustom: true },
+    build: { groups: ['tools'], exclude: ['build'], allowNone: true, allowCustom: false }
+  },
   headerMaxLength: 72,
   requireLowercaseDescription: true,
   allowFinalPeriod: false
 };
 
-test('formats a breaking commit with body and footer', () => {
-  assert.equal(
-    formatCommit({
-      type: 'feat', scope: 'api', description: 'remove legacy endpoint', breaking: true,
-      body: 'The v1 compatibility endpoint is no longer exposed.',
-      breakingDescription: 'clients must migrate to v2', footers: ['Refs: #42']
-    }),
-    'feat(api)!: remove legacy endpoint\n\nThe v1 compatibility endpoint is no longer exposed.\n\nBREAKING CHANGE: clients must migrate to v2\nRefs: #42'
-  );
+test('formats a complete breaking commit', () => {
+  assert.equal(formatCommit({
+    type: 'feat', scope: 'api', description: 'add batch endpoint', breaking: true,
+    body: 'Supports multiple jobs.', breakingDescription: 'clients must accept arrays', footers: ['Refs: #12']
+  }), 'feat(api)!: add batch endpoint\n\nSupports multiple jobs.\n\nBREAKING CHANGE: clients must accept arrays\nRefs: #12');
 });
 
-test('validates a correct header', () => {
-  assert.deepEqual(validateCommit('feat(api): add health endpoint', policy), []);
+test('resolves reusable scope groups for a type', () => {
+  assert.deepEqual(resolveScopePolicy('build', policy), {
+    scopes: ['npm', 'docker'], excluded: ['build'], allowNone: true, allowCustom: false
+  });
 });
 
-test('reports policy violations', () => {
-  const errors = validateCommit('docs(api): Add health endpoint.', policy);
-  assert.equal(errors.length, 3);
+test('rejects redundant type-scope pairs', () => {
+  assert.deepEqual(validateCommit('build(build): update tooling', policy), [
+    'Scope "build" is redundant or forbidden for type "build".'
+  ]);
+});
+
+test('rejects non-allowed custom scope when disabled', () => {
+  assert.deepEqual(validateCommit('build(api): update tooling', policy), [
+    'Scope "api" is not allowed for type "build".'
+  ]);
+});
+
+test('accepts a compatible matrix pair', () => {
+  assert.deepEqual(validateCommit('build(npm): update lockfile', policy), []);
 });
