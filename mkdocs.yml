@@ -20,7 +20,8 @@ repo_name: Terradue/conventional-commits-extension
 edit_uri: edit/main/docs/
 
 theme:
-  name: material
+  logo: imgs/icon-eoap.png
+  name: readthedocs
   features:
     - content.code.copy
     - navigation.footer
@@ -45,30 +46,10 @@ theme:
         icon: material/weather-sunny
         name: Switch to light mode
 
-theme:
-    logo: imgs/icon-eoap.png
-    name: readthedocs
-
-    palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
-
 plugins:
   - search
   - mermaid2:
       version: 11.4.1
-  - mkdocs-jupyter:
-      execute: true
-      show_input: True
-      no_input: False
 
 markdown_extensions:
   - pymdownx.details
@@ -117,16 +98,5 @@ nav:
   - Explanation:
       - Why Conventional Commits?: explanation/why-conventional-commits.md
       - Policy and design: explanation/policy-and-design.md
-
-markdown_extensions:
-  - admonition
-  - attr_list
-  - pymdownx.details
-  - pymdownx.superfences
-  - toc:
-      permalink: true
-
-plugins:
-  - search
 
 copyright: <a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue"" alt="Apache License, Version 2.0" /></a>
