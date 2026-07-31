@@ -2,6 +2,8 @@
 
 A generic VS Code extension that composes Conventional Commit messages through the built-in Git Source Control interface.
 
+Read the complete [documentation](https://terradue.github.io/conventional-commits-extension/).
+
 Unlike flat scope pickers, this extension resolves scopes **after the commit type is selected**. Repository policy can therefore allow `build(npm)` while rejecting redundant combinations such as `build(build)`.
 
 ## Features
@@ -190,4 +192,3 @@ The extension requires VS Code 1.95 or newer.
 ## License
 
 [![Apache License, Version 2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue)](https://www.apache.org/licenses/LICENSE-2.0)
-ASSs
