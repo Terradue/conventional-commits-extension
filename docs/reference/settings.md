@@ -8,6 +8,7 @@ All settings use the `contextualConventionalCommits` namespace and can be config
 | `scopeGroups` | object of string arrays | See below | Reusable named scope groups referenced by type rules. |
 | `typeScopeMatrix` | object of rules | See below | Contextual scope policy keyed by commit type. |
 | `typeTrailerMatrix` | object of rules | See below | Contextual Git trailer suggestions and cautions keyed by commit type. |
+| `trailerDescriptions` | object of strings | See below | Meanings shown beside trailer choices and in their value prompts. |
 | `inferScopesFromChangedFiles` | boolean | `true` | Prioritize top-level directories from staged, unstaged, and merge changes as scope candidates. |
 | `headerMaxLength` | integer | `72` | Maximum header length; minimum configurable value is 20. |
 | `requireLowercaseDescription` | boolean | `true` | Require the first description character to be lowercase. |
@@ -99,6 +100,22 @@ Values are trimmed and de-duplicated. The picker remains open while the user add
 ```
 
 An absent rule still permits custom trailers; it simply provides no recommended picker choices or cautions.
+
+## Trailer descriptions
+
+`trailerDescriptions` maps an exact trailer token to the concise meaning displayed beside it in the picker. The description is also included in the value prompt after selection. Unknown tokens fall back to **Project-defined trailer recommended for _type_**.
+
+```json
+{
+  "contextualConventionalCommits.trailerDescriptions": {
+    "Refs": "Related issue, ticket, commit, or document; does not imply completion",
+    "Tested-by": "Person who successfully tested the change; use Name <email>",
+    "Runbook": "Operational procedure affected by the change"
+  }
+}
+```
+
+Git standardizes how trailers are parsed, but not a universal token vocabulary. The bundled descriptions summarize established community conventions where they exist and give neutral project-policy meanings to generic tokens. Override them when a repository's automation assigns different semantics.
 
 ## Inferred scopes
 

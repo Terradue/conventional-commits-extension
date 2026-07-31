@@ -100,6 +100,19 @@ If a type has no matrix rule, it resolves no predefined scopes but still permits
 
 Use `highValue` to populate the type-specific incremental trailer picker and `discouraged` to surface cautions on the custom-trailer action. Neither field requires or forbids a trailer. An absent trailer rule simply leaves no recommended tokens while retaining custom entry.
 
+Use `trailerDescriptions` to explain both built-in and project-specific tokens beside the picker choice:
+
+```json
+{
+  "contextualConventionalCommits.trailerDescriptions": {
+    "Runbook": "Operational procedure affected by the change",
+    "Rollout": "Deployment plan, feature flag, or staged-release reference"
+  }
+}
+```
+
+Descriptions should answer what evidence or identifier belongs in the value. Keep them short enough to scan in the picker.
+
 Keep caution text explanatory when a trailer has legitimate exceptions, for example `"Tested-by, except for documentation builds"`. For security fixes under embargo, do not encode private vulnerability details in a public commit message.
 
 ## Choose the configuration level
