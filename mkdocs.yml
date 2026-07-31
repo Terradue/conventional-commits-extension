@@ -1,0 +1,76 @@
+# Copyright 2026 Terradue
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+site_name: Terradue Conventional Commits - VSCode Extension
+site_description: Documentation for the Terradue Conventional Commits VS Code extension
+site_url: https://terradue.github.io/conventional-commits-extension/
+repo_url: https://github.com/Terradue/conventional-commits-extension
+repo_name: Terradue/conventional-commits-extension
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      accent: orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Tutorial:
+      - Your first conventional commit: tutorials/first-commit.md
+  - How-to guides:
+      - Install the extension: how-to/install.md
+      - Configure a team policy: how-to/configure-policy.md
+      - Record breaking changes and issue links: how-to/breaking-changes-and-footers.md
+      - Validate and troubleshoot a message: how-to/validate-and-troubleshoot.md
+  - Reference:
+      - Commit format: reference/commit-format.md
+      - Commands: reference/commands.md
+      - Settings: reference/settings.md
+  - Explanation:
+      - Why Conventional Commits?: explanation/why-conventional-commits.md
+      - Policy and design: explanation/policy-and-design.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+copyright: <a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue"" alt="Apache License, Version 2.0" /></a>

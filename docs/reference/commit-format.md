@@ -1,0 +1,67 @@
+# Commit format
+
+The extension generates messages based on [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/):
+
+```text
+<type>[optional scope][!]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+## Elements
+
+| Element | Required | Extension behavior |
+| --- | --- | --- |
+| Type | Yes | Selected from `terradueConventionalCommits.types`. |
+| Scope | No | Selected from inferred and configured scopes, enclosed in parentheses. |
+| `!` | No | Added when **breaking change** is **Yes**. |
+| Description | Yes | Validated while it is entered. |
+| Body | No | Collected in one input field and separated from the header by a blank line. |
+| Footers | No | Entered as comma-separated trailers and emitted one per line. |
+| `BREAKING CHANGE:` | For breaking compositions | Generated from the required breaking-change description. |
+
+## Validation rules
+
+The extension validates the first line against:
+
+```text
+<type>(<scope>)!: <description>
+```
+
+where scope and `!` are optional. It then applies the active policy:
+
+- type must occur in the configured type list;
+- scope must not contain whitespace;
+- the header must not exceed `headerMaxLength`;
+- the description must start lowercase when `requireLowercaseDescription` is enabled; and
+- the description must not end in a period unless `allowFinalPeriod` is enabled.
+
+The last three rules are extension policy defaults, not Conventional Commits requirements.
+
+## Examples
+
+```text
+fix: prevent duplicate requests
+```
+
+```text
+feat(api): add health endpoint
+```
+
+```text
+feat(api)!: remove legacy endpoint
+
+Clients should migrate to /v2/status.
+
+BREAKING CHANGE: the /v1/status endpoint is no longer available
+Refs: #42
+```
+
+## Current input limitations
+
+- The body prompt is a single VS Code input field, so the composer does not create a multi-paragraph body.
+- Commas delimit footer entries, so an individual footer value cannot contain a comma.
+- Validation checks the header and project policy; it is not a complete parser for every body and footer rule in the Conventional Commits specification.
+

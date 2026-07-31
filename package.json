@@ -1,0 +1,209 @@
+{
+  "name": "terradue-conventional-commits",
+  "displayName": "Terradue Conventional Commits",
+  "description": "Policy-driven Conventional Commits composer integrated with VS Code Git source control.",
+  "version": "0.1.0",
+  "publisher": "terradue",
+  "license": "Apache-2.0",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Source Control"
+  ],
+  "keywords": [
+    "git",
+    "conventional commits",
+    "commitlint",
+    "source control"
+  ],
+  "activationEvents": [
+    "onCommand:terradueConventionalCommits.compose",
+    "onCommand:terradueConventionalCommits.validate",
+    "onCommand:terradueConventionalCommits.commit"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "terradueConventionalCommits.compose",
+        "title": "Compose Conventional Commit",
+        "category": "Git",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "terradueConventionalCommits.validate",
+        "title": "Validate Conventional Commit",
+        "category": "Git",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "terradueConventionalCommits.commit",
+        "title": "Compose and Commit",
+        "category": "Git",
+        "icon": "$(git-commit)"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "terradueConventionalCommits.compose",
+          "when": "scmProvider == git",
+          "group": "navigation@8"
+        }
+      ],
+      "scm/inputBox": [
+        {
+          "command": "terradueConventionalCommits.compose",
+          "when": "scmProvider == git",
+          "group": "navigation@1"
+        },
+        {
+          "command": "terradueConventionalCommits.validate",
+          "when": "scmProvider == git",
+          "group": "navigation@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "terradueConventionalCommits.compose"
+        },
+        {
+          "command": "terradueConventionalCommits.validate"
+        },
+        {
+          "command": "terradueConventionalCommits.commit"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Terradue Conventional Commits",
+      "properties": {
+        "terradueConventionalCommits.types": {
+          "type": "array",
+          "scope": "resource",
+          "default": [
+            {
+              "name": "feat",
+              "description": "Introduce new functionality"
+            },
+            {
+              "name": "fix",
+              "description": "Correct defective behaviour"
+            },
+            {
+              "name": "docs",
+              "description": "Change documentation only"
+            },
+            {
+              "name": "style",
+              "description": "Change formatting without behavioural changes"
+            },
+            {
+              "name": "refactor",
+              "description": "Restructure code without changing behaviour"
+            },
+            {
+              "name": "perf",
+              "description": "Improve performance"
+            },
+            {
+              "name": "test",
+              "description": "Add or correct tests"
+            },
+            {
+              "name": "build",
+              "description": "Change build system or dependencies"
+            },
+            {
+              "name": "ci",
+              "description": "Change continuous integration configuration"
+            },
+            {
+              "name": "chore",
+              "description": "Perform repository maintenance"
+            },
+            {
+              "name": "revert",
+              "description": "Revert a previous commit"
+            }
+          ],
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "description"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "terradueConventionalCommits.scopes": {
+          "type": "array",
+          "scope": "resource",
+          "default": [
+            "api",
+            "openapi",
+            "arazzo",
+            "asyncapi",
+            "cwl",
+            "stac",
+            "cli",
+            "docs",
+            "build",
+            "release"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "terradueConventionalCommits.inferScopesFromChangedFiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Offer top-level changed directories as scope candidates."
+        },
+        "terradueConventionalCommits.headerMaxLength": {
+          "type": "integer",
+          "default": 72,
+          "minimum": 20
+        },
+        "terradueConventionalCommits.requireLowercaseDescription": {
+          "type": "boolean",
+          "default": true
+        },
+        "terradueConventionalCommits.allowFinalPeriod": {
+          "type": "boolean",
+          "default": false
+        },
+        "terradueConventionalCommits.commitAfterCompose": {
+          "type": "boolean",
+          "default": false,
+          "description": "Commit immediately after composing instead of only filling the SCM input box."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --max-warnings=0",
+    "check": "npm run compile && npm run lint && npm test",
+    "test": "node --test dist/test/*.test.js",
+    "package": "npm run check && vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.95.0",
+    "@vscode/vsce": "^3.2.1",
+    "eslint": "^9.16.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0"
+  }
+}
