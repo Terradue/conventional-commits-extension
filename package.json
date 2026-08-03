@@ -2,7 +2,8 @@
   "name": "contextual-conventional-commits",
   "displayName": "Contextual Conventional Commits",
   "description": "A generic, policy-driven Conventional Commits composer with contextual type-to-scope selection for VS Code Git.",
-  "version": "0.1.0",
+  "icon": "media/icon.png",
+  "version": "0.1.1",
   "publisher": "local",
   "license": "Apache-2.0",
   "repository": {
