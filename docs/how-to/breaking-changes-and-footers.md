@@ -27,7 +27,7 @@ The **Yes** choice carries type-specific guidance when `BREAKING CHANGE` appears
 The type-specific trailer picker remains open until you select **Finish trailers**:
 
 1. Select a recommended token such as `Refs`, or select **Add custom trailer…** and enter a token.
-2. Enter its value. A selected `Refs` token with value `#42` becomes `Refs: #42`.
+2. Enter its value. The box shows an example tailored to the selected token; a selected `Refs` token with value `#42` becomes `Refs: #42`.
 3. Repeat to add more trailers, including another trailer with the same token.
 4. If necessary, select **Remove an added trailer…** and choose the entry to discard.
 5. Select **Finish trailers** when the list is complete.

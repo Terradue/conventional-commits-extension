@@ -12,6 +12,14 @@ function normalize(values: readonly string[]): readonly string[] {
   return [...new Set(values.map((value) => value.trim()).filter(Boolean))];
 }
 
+function normalizeRecord(values: Readonly<Record<string, string>>): Readonly<Record<string, string>> {
+  return Object.fromEntries(
+    Object.entries(values)
+      .map(([token, value]) => [token.trim(), value.trim()])
+      .filter(([token, value]) => token && value)
+  );
+}
+
 export function resolveScopePolicy(type: string, policy: CommitPolicy): ResolvedScopePolicy {
   const rule: TypeScopeRule = policy.typeScopeMatrix[type] ?? {};
   const grouped = (rule.groups ?? []).flatMap((group) => policy.scopeGroups[group] ?? []);
@@ -32,11 +40,8 @@ export function resolveTrailerPolicy(type: string, policy: CommitPolicy): Resolv
   return {
     highValue: normalize(rule.highValue ?? []),
     discouraged: normalize(rule.discouraged ?? []),
-    descriptions: Object.fromEntries(
-      Object.entries(policy.trailerDescriptions)
-        .map(([token, description]) => [token.trim(), description.trim()])
-        .filter(([token, description]) => token && description)
-    )
+    descriptions: normalizeRecord(policy.trailerDescriptions),
+    examples: normalizeRecord(policy.trailerExamples)
   };
 }
 

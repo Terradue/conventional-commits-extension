@@ -21,6 +21,7 @@ export interface TypeTrailerRule {
 
 export type TypeTrailerMatrix = Readonly<Record<string, TypeTrailerRule>>;
 export type TrailerDescriptions = Readonly<Record<string, string>>;
+export type TrailerExamples = Readonly<Record<string, string>>;
 
 export interface CommitDraft {
   readonly type: string;
@@ -38,6 +39,7 @@ export interface CommitPolicy {
   readonly typeScopeMatrix: TypeScopeMatrix;
   readonly typeTrailerMatrix: TypeTrailerMatrix;
   readonly trailerDescriptions: TrailerDescriptions;
+  readonly trailerExamples: TrailerExamples;
   readonly headerMaxLength: number;
   readonly requireLowercaseDescription: boolean;
   readonly allowFinalPeriod: boolean;
@@ -54,4 +56,5 @@ export interface ResolvedTrailerPolicy {
   readonly highValue: readonly string[];
   readonly discouraged: readonly string[];
   readonly descriptions: TrailerDescriptions;
+  readonly examples: TrailerExamples;
 }

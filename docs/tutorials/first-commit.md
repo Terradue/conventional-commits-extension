@@ -114,6 +114,8 @@ Select `Refs`, then enter this value:
 #123
 ```
 
+The value box suggests `Example: #123`; the example is contextual guidance and is not inserted automatically.
+
 ![Link related work with a footer](../imgs/08.png "Link related work with a footer")
 
 The picker returns after adding the trailer. Select **Finish trailers** to continue. Footers are optional; select **Finish trailers** immediately to omit them.

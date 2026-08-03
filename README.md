@@ -126,13 +126,17 @@ Rule fields:
 
 Maps each type to high-value trailer tokens and contextual cautions. The composer lets users add one recommended or custom token and value at a time, remove mistakes, repeat a token when necessary, and finish without writing a CSV list.
 
-Recommended tokens display a concise meaning from `contextualConventionalCommits.trailerDescriptions`. The same description is repeated while entering the value, and teams can override or add descriptions for their own vocabulary:
+Recommended tokens display a concise meaning from `contextualConventionalCommits.trailerDescriptions`. After selection, the value box shows a token-specific example from `contextualConventionalCommits.trailerExamples`. Teams can override or add both for their own vocabulary:
 
 ```json
 {
   "contextualConventionalCommits.trailerDescriptions": {
     "Fixes": "Issue or causal commit whose defect this change corrects",
     "Runbook": "Operational procedure affected by the change"
+  },
+  "contextualConventionalCommits.trailerExamples": {
+    "Fixes": "#321",
+    "Runbook": "docs/runbooks/batch-worker.md"
   }
 }
 ```

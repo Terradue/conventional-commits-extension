@@ -9,6 +9,7 @@ All settings use the `contextualConventionalCommits` namespace and can be config
 | `typeScopeMatrix` | object of rules | See below | Contextual scope policy keyed by commit type. |
 | `typeTrailerMatrix` | object of rules | See below | Contextual Git trailer suggestions and cautions keyed by commit type. |
 | `trailerDescriptions` | object of strings | See below | Meanings shown beside trailer choices and in their value prompts. |
+| `trailerExamples` | object of strings | See below | Contextual example values shown after selecting a trailer token. |
 | `inferScopesFromChangedFiles` | boolean | `true` | Prioritize top-level directories from staged, unstaged, and merge changes as scope candidates. |
 | `headerMaxLength` | integer | `72` | Maximum header length; minimum configurable value is 20. |
 | `requireLowercaseDescription` | boolean | `true` | Require the first description character to be lowercase. |
@@ -116,6 +117,22 @@ An absent rule still permits custom trailers; it simply provides no recommended 
 ```
 
 Git standardizes how trailers are parsed, but not a universal token vocabulary. The bundled descriptions summarize established community conventions where they exist and give neutral project-policy meanings to generic tokens. Override them when a repository's automation assigns different semantics.
+
+## Trailer examples
+
+`trailerExamples` maps an exact trailer token to the example displayed in its value box. The example is a placeholder and is not inserted into the commit. Unknown tokens fall back to **Enter a project-specific value for _token_**.
+
+```json
+{
+  "contextualConventionalCommits.trailerExamples": {
+    "Refs": "#123",
+    "Tested-by": "Alex Doe <alex@example.com>",
+    "Runbook": "docs/runbooks/batch-worker.md"
+  }
+}
+```
+
+Examples should contain only the value because the selected token is already shown in the input title and prompt. Override bundled examples when a repository uses a different identifier or automation convention.
 
 ## Inferred scopes
 

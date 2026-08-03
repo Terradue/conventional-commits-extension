@@ -13,6 +13,7 @@ import type {
   CommitType,
   ScopeGroups,
   TrailerDescriptions,
+  TrailerExamples,
   TypeScopeMatrix,
   TypeTrailerMatrix
 } from './model';
@@ -27,6 +28,7 @@ function getPolicy(resource?: vscode.Uri): CommitPolicy {
     typeScopeMatrix: configuration.get<TypeScopeMatrix>('typeScopeMatrix', {}),
     typeTrailerMatrix: configuration.get<TypeTrailerMatrix>('typeTrailerMatrix', {}),
     trailerDescriptions: configuration.get<TrailerDescriptions>('trailerDescriptions', {}),
+    trailerExamples: configuration.get<TrailerExamples>('trailerExamples', {}),
     headerMaxLength: configuration.get<number>('headerMaxLength', 72),
     requireLowercaseDescription: configuration.get<boolean>('requireLowercaseDescription', true),
     allowFinalPeriod: configuration.get<boolean>('allowFinalPeriod', false)
@@ -42,12 +44,11 @@ async function selectTrailers(type: string, policy: CommitPolicy): Promise<reado
 
   async function addTrailer(token: string): Promise<boolean> {
     const meaning = trailerPolicy.descriptions[token];
+    const example = trailerPolicy.examples[token];
     const value = await vscode.window.showInputBox({
       title: `${token} trailer`,
       prompt: meaning ? `${meaning}. Enter the value for ${token}` : `Enter the value for ${token}`,
-      placeHolder: token === 'Co-authored-by' || token === 'Tested-by' || token === 'Reviewed-by'
-        ? 'Name <email@example.com>'
-        : '#123 or project-specific value',
+      placeHolder: example ? `Example: ${example}` : `Enter a project-specific value for ${token}`,
       validateInput: (input) => input.trim() ? undefined : 'A trailer value is required.'
     });
     if (value === undefined) return false;

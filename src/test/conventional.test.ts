@@ -34,6 +34,12 @@ const policy: CommitPolicy = {
     '': 'ignored',
     Empty: '   '
   },
+  trailerExamples: {
+    Refs: ' #123 ',
+    'Tested-by': 'Alex Doe <alex@example.com>',
+    '': 'ignored',
+    Empty: '   '
+  },
   headerMaxLength: 72,
   requireLowercaseDescription: true,
   allowFinalPeriod: false
@@ -59,6 +65,10 @@ test('resolves and normalizes contextual trailers for a type', () => {
     descriptions: {
       Refs: 'Related work that does not imply completion',
       'Tested-by': 'Names a person who successfully tested the change'
+    },
+    examples: {
+      Refs: '#123',
+      'Tested-by': 'Alex Doe <alex@example.com>'
     }
   });
 });
@@ -70,6 +80,10 @@ test('uses an empty permissive trailer policy for an unknown type', () => {
     descriptions: {
       Refs: 'Related work that does not imply completion',
       'Tested-by': 'Names a person who successfully tested the change'
+    },
+    examples: {
+      Refs: '#123',
+      'Tested-by': 'Alex Doe <alex@example.com>'
     }
   });
 });
