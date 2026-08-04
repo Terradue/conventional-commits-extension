@@ -283,6 +283,6 @@
     "@vscode/vsce": "^3.9.2",
     "eslint": "^9.16.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.65.0"
+    "typescript-eslint": "^8.66.0"
   }
 }
