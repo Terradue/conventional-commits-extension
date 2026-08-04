@@ -18,7 +18,7 @@ All settings use the `contextualConventionalCommits` namespace and can be config
 
 ## Types
 
-The default types are `feat`, `fix`, `security`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `style`, `chore`, and `revert`. Each entry has a `name` and picker `description`:
+The alphabetized default types are `a11y`, `api`, `build`, `chore`, `ci`, `config`, `data`, `deps`, `docs`, `feat`, `fix`, `i18n`, `infra`, `legal`, `meta`, `perf`, `refactor`, `release`, `revert`, `schema`, `security`, `style`, `test`, and `ux`. Each entry has a `name` and picker `description`:
 
 ```json
 {
@@ -31,11 +31,11 @@ The default types are `feat`, `fix`, `security`, `perf`, `refactor`, `docs`, `te
 
 Type names must match `^[a-z][a-z0-9-]*$`.
 
-`security` is a useful project extension for vulnerability remediation and security hardening, but Conventional Commits 1.0.0 does not prescribe it or any other fixed type list. Add `security` to external tools such as commitlint when their configuration restricts allowed types.
+Conventional Commits 1.0.0 gives standard release meaning to `feat` and `fix` but does not prescribe a closed type list. The broader defaults synthesize Angular, Vue, commitlint, semantic-release, Release Please, Conventional Changelog, Atom, and common monorepo and domain practices. Types such as `a11y`, `api`, `config`, `data`, `deps`, `i18n`, `infra`, `legal`, `meta`, `release`, `schema`, `security`, and `ux` are ecosystem or project extensions. Add the extensions retained by a project to tools such as commitlint when their configuration restricts allowed types. See [Conventional Commit type-to-scope best practices](../type-scope-best-practices.md#sources-of-the-default-type-vocabulary) for the source-by-source mapping and usage guidance.
 
 ## Scope groups
 
-`scopeGroups` defines reusable named lists. The bundled groups are `components`, `platforms`, `build-tools`, `package-managers`, `ci-providers`, `documentation`, `test-layers`, and `security-areas`.
+`scopeGroups` defines reusable named lists. The bundled groups are `build-tools`, `ci-providers`, `components`, `documentation`, `package-managers`, `platforms`, `security-areas`, and `test-layers`.
 
 ```json
 {
