@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/Terradue/conventional-commits-extension.git"
   },
-  "engines": { "vscode": "^1.95.0" },
+  "engines": { "vscode": "^1.125.0" },
   "categories": ["Source Control"],
   "keywords": ["git", "conventional commits", "commitlint", "source control", "scope matrix"],
   "activationEvents": [
