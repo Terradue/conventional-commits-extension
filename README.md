@@ -181,7 +181,7 @@ ci(ci): adjust workflow
 docs(docs): improve guide
 ```
 
-The default policy also includes the project extension type `security`. It is not a built-in Conventional Commits type; projects using commitlint must add it to their `type-enum` rule. See [`docs/type-scope-best-practices.md`](docs/type-scope-best-practices.md) for the consolidated scope and trailer guidance.
+The alphabetized default policy combines types used across Conventional Commits, Angular, Vue, commitlint, semantic-release, Release Please, Conventional Changelog, Atom, and common monorepo and domain workflows. The domain-oriented entries are project extensions rather than built-in Conventional Commits types; projects using a restricted commitlint `type-enum` must add the extensions they retain. See [`docs/type-scope-best-practices.md`](docs/type-scope-best-practices.md) for the source mapping and consolidated scope and trailer guidance.
 
 ## Development
 
