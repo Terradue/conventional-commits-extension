@@ -4,7 +4,7 @@
   "description": "A generic, policy-driven Conventional Commits composer with contextual type-to-scope selection for VS Code Git.",
   "icon": "media/icon.png",
   "version": "0.1.0",
-  "publisher": "local",
+  "publisher": "terradue",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
