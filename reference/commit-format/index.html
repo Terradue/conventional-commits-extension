@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/conventional-commits-extension/reference/commit-format/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Commit format - Contextual Conventional Commits - VS Code Extension</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../styles/css/app.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Commit format";
+        var mkdocs_page_input_path = "reference/commit-format.md";
+        var mkdocs_page_url = "/conventional-commits-extension/reference/commit-format/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../imgs/icon-eoap.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-commit/">Your first conventional commit</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/install/">Install the extension</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/configure-policy/">Configure a team policy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/breaking-changes-and-footers/">Record breaking changes and issue links</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/validate-and-troubleshoot/">Validate and troubleshoot a message</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Commit format</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#elements">Elements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#validation-rules">Validation rules</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-scope-policy-is-resolved">How scope policy is resolved</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#current-input-behavior">Current input behavior</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../commands/">Commands</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../type-scope-best-practices/">Type-to-scope best practices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/why-conventional-commits/">Why Conventional Commits?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/policy-and-design/">Policy and design</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Contextual Conventional Commits - VS Code Extension</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Commit format</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/conventional-commits-extension/edit/main/docs/reference/commit-format.md">Edit on Terradue/conventional-commits-extension</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="commit-format">Commit format</h1>
+<p>The extension generates messages based on <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits 1.0.0</a>:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1">&lt;type&gt;[optional scope][!]: &lt;description&gt;
+</span><span id="__span-0-2">
+</span><span id="__span-0-3">[optional body]
+</span><span id="__span-0-4">
+</span><span id="__span-0-5">[optional footer(s)]
+</span></code></pre></div>
+<h2 id="elements">Elements</h2>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Required</th>
+<th>Extension behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>Yes</td>
+<td>Selected from <code>contextualConventionalCommits.types</code>.</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Policy-dependent</td>
+<td>Resolved after the type is selected and enclosed in parentheses. A type can allow, require, or effectively prohibit a scope.</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td>No</td>
+<td>Added when <strong>breaking change</strong> is <strong>Yes</strong>.</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>Yes</td>
+<td>Validated while it is entered.</td>
+</tr>
+<tr>
+<td>Body</td>
+<td>No</td>
+<td>Collected in one input field and separated from the header by a blank line.</td>
+</tr>
+<tr>
+<td>Footers</td>
+<td>No</td>
+<td>Recommended or custom trailers are added incrementally as token/value pairs, can be removed before finishing, and are emitted one per line.</td>
+</tr>
+<tr>
+<td><code>BREAKING CHANGE:</code></td>
+<td>For breaking compositions</td>
+<td>Generated from the required breaking-change description.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="validation-rules">Validation rules</h2>
+<p>The extension validates the first line against:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1">&lt;type&gt;(&lt;scope&gt;)!: &lt;description&gt;
+</span></code></pre></div>
+<p>where scope and <code>!</code> are optional. It then applies the active policy:</p>
+<ul>
+<li>type must occur in the configured type list;</li>
+<li>scope must not contain whitespace;</li>
+<li>an absent scope is rejected when the selected type sets <code>allowNone</code> to <code>false</code>;</li>
+<li>scopes listed in the selected type's <code>exclude</code> rule are rejected;</li>
+<li>when <code>allowCustom</code> is <code>false</code>, the scope must occur in the list resolved for that type;</li>
+<li>the header must not exceed <code>headerMaxLength</code>;</li>
+<li>the description must start lowercase when <code>requireLowercaseDescription</code> is enabled; and</li>
+<li>the description must not end in a period unless <code>allowFinalPeriod</code> is enabled.</li>
+</ul>
+<p>The last three rules are extension policy defaults, not Conventional Commits requirements.</p>
+<h2 id="how-scope-policy-is-resolved">How scope policy is resolved</h2>
+<p>For the header's type, the extension:</p>
+<ol>
+<li>reads its rule from <code>typeScopeMatrix</code> (or uses an empty rule when none exists);</li>
+<li>expands every named entry in <code>groups</code> from <code>scopeGroups</code>;</li>
+<li>appends the rule's direct <code>scopes</code> and removes duplicates and blank values;</li>
+<li>removes every value named in <code>exclude</code>; and</li>
+<li>defaults both <code>allowNone</code> and <code>allowCustom</code> to <code>true</code> when omitted.</li>
+</ol>
+<p>An unknown group contributes no scopes. See <a href="../settings/">Settings</a> for the complete schema.</p>
+<h2 id="examples">Examples</h2>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1">fix: prevent duplicate requests
+</span></code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1">feat(api): add health endpoint
+</span></code></pre></div>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1">feat(api)!: remove legacy endpoint
+</span><span id="__span-4-2">
+</span><span id="__span-4-3">Clients should migrate to /v2/status.
+</span><span id="__span-4-4">
+</span><span id="__span-4-5">BREAKING CHANGE: the /v1/status endpoint is no longer available
+</span><span id="__span-4-6">Refs: #42
+</span></code></pre></div>
+<h2 id="current-input-behavior">Current input behavior</h2>
+<ul>
+<li>The body prompt is a single VS Code input field, so the composer does not create a multi-paragraph body.</li>
+<li>Trailer values are collected individually and may contain commas.</li>
+<li>Custom tokens accept letters, numbers, and hyphens. Use hyphens instead of spaces; <code>BREAKING CHANGE</code> is handled by the dedicated breaking-change step.</li>
+<li>Validation checks the header and project policy; it is not a complete parser for every body and footer rule in the Conventional Commits specification.</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../how-to/validate-and-troubleshoot/" class="btn btn-neutral float-left" title="Validate and troubleshoot a message"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../commands/" class="btn btn-neutral float-right" title="Commands">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue"" alt="Apache License, Version 2.0" /></a></p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/conventional-commits-extension" class="fa fa-code-fork" style="color: #fcfcfc"> Terradue/conventional-commits-extension</a>
+        </span>
+    
+    
+      <span><a href="../../how-to/validate-and-troubleshoot/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../commands/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../javascripts/config.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

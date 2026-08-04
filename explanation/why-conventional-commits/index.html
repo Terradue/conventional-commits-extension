@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/conventional-commits-extension/explanation/why-conventional-commits/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Why Conventional Commits? - Contextual Conventional Commits - VS Code Extension</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../styles/css/app.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Why Conventional Commits?";
+        var mkdocs_page_input_path = "explanation/why-conventional-commits.md";
+        var mkdocs_page_url = "/conventional-commits-extension/explanation/why-conventional-commits/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../..">
+          <img src="../../imgs/icon-eoap.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-commit/">Your first conventional commit</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/install/">Install the extension</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/configure-policy/">Configure a team policy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/breaking-changes-and-footers/">Record breaking changes and issue links</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/validate-and-troubleshoot/">Validate and troubleshoot a message</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/commit-format/">Commit format</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/commands/">Commands</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../type-scope-best-practices/">Type-to-scope best practices</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Why Conventional Commits?</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#relationship-to-semantic-versioning">Relationship to Semantic Versioning</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#structure-separates-concerns">Structure separates concerns</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#specification-versus-team-convention">Specification versus team convention</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../policy-and-design/">Policy and design</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Contextual Conventional Commits - VS Code Extension</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Explanation</li>
+      <li class="breadcrumb-item active">Why Conventional Commits?</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/conventional-commits-extension/edit/main/docs/explanation/why-conventional-commits.md">Edit on Terradue/conventional-commits-extension</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="why-conventional-commits">Why Conventional Commits?</h1>
+<p><a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits 1.0.0</a> adds a lightweight structure to Git commit messages. The structure communicates whether a change fixes a defect, adds a feature, affects a particular area, or breaks compatibility.</p>
+<p>This matters to both people and tools. A consistent history is easier to scan, and automation can use it to generate changelogs, calculate releases, or trigger publishing workflows.</p>
+<h2 id="relationship-to-semantic-versioning">Relationship to Semantic Versioning</h2>
+<p>The specification gives three signals direct release meaning:</p>
+<table>
+<thead>
+<tr>
+<th>Commit signal</th>
+<th>Meaning</th>
+<th>Typical SemVer effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fix:</code></td>
+<td>Corrects a bug</td>
+<td>PATCH</td>
+</tr>
+<tr>
+<td><code>feat:</code></td>
+<td>Adds a feature</td>
+<td>MINOR</td>
+</tr>
+<tr>
+<td><code>!</code> or <code>BREAKING CHANGE:</code></td>
+<td>Introduces incompatible behavior</td>
+<td>MAJOR</td>
+</tr>
+</tbody>
+</table>
+<p>Other types such as <code>docs</code>, <code>test</code>, and <code>refactor</code> are allowed, but the specification assigns them no automatic semantic-version effect. A project's release tooling may define additional rules.</p>
+<h2 id="structure-separates-concerns">Structure separates concerns</h2>
+<p>Consider:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1">fix(api): avoid duplicate status requests
+</span><span id="__span-0-2">
+</span><span id="__span-0-3">Reuse the in-flight request until it resolves.
+</span><span id="__span-0-4">
+</span><span id="__span-0-5">Refs: #42
+</span></code></pre></div>
+<ul>
+<li><code>fix</code> communicates the kind of change.</li>
+<li><code>api</code> locates the affected area.</li>
+<li>the description makes the result scannable in a log.</li>
+<li>the body explains the reasoning.</li>
+<li>the footer connects the commit to other information.</li>
+</ul>
+<p>The extension turns those decisions into a short sequence of focused prompts. It does not decide what your change means; it makes the chosen meaning consistent and correctly structured.</p>
+<h2 id="specification-versus-team-convention">Specification versus team convention</h2>
+<p>Conventional Commits deliberately leaves room for teams to define types and style. It requires a type and description, defines optional scopes, bodies and footers, and defines how breaking changes are signalled. It does not require a 72-character header, lowercase summary, or omission of a final period.</p>
+<p>Those additional rules are defaults in this extension because consistency is useful, and they remain configurable as project policy.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../type-scope-best-practices/" class="btn btn-neutral float-left" title="Type-to-scope best practices"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../policy-and-design/" class="btn btn-neutral float-right" title="Policy and design">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue"" alt="Apache License, Version 2.0" /></a></p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/conventional-commits-extension" class="fa fa-code-fork" style="color: #fcfcfc"> Terradue/conventional-commits-extension</a>
+        </span>
+    
+    
+      <span><a href="../../type-scope-best-practices/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../policy-and-design/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../javascripts/config.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/conventional-commits-extension/type-scope-best-practices/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Type-to-scope best practices - Contextual Conventional Commits - VS Code Extension</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../styles/css/app.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Type-to-scope best practices";
+        var mkdocs_page_input_path = "type-scope-best-practices.md";
+        var mkdocs_page_url = "/conventional-commits-extension/type-scope-best-practices/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="..">
+          <img src="../imgs/icon-eoap.png" class="logo" alt="Logo"/>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorial</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/first-commit/">Your first conventional commit</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/install/">Install the extension</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/configure-policy/">Configure a team policy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/breaking-changes-and-footers/">Record breaking changes and issue links</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/validate-and-troubleshoot/">Validate and troubleshoot a message</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/commit-format/">Commit format</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/commands/">Commands</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../reference/settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Type-to-scope best practices</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#default-pair-examples">Default pair examples</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sources-of-the-default-type-vocabulary">Sources of the default type vocabulary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#security-as-a-project-extension">Security as a project extension</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#contextual-git-trailers">Contextual Git trailers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#trailer-meanings-shown-by-the-composer">Trailer meanings shown by the composer</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../explanation/why-conventional-commits/">Why Conventional Commits?</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../explanation/policy-and-design/">Policy and design</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Contextual Conventional Commits - VS Code Extension</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Reference</li>
+      <li class="breadcrumb-item active">Type-to-scope best practices</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/conventional-commits-extension/edit/main/docs/type-scope-best-practices.md">Edit on Terradue/conventional-commits-extension</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="conventional-commit-type-to-scope-best-practices">Conventional Commit type-to-scope best practices</h1>
+<p>Conventional Commits standardizes the message structure but does not prescribe a universal list of scopes. The most reusable convention is:</p>
+<ul>
+<li><strong>type</strong>: the nature of the change;</li>
+<li><strong>scope</strong>: the affected package, subsystem, component, platform, or artefact.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Recommended scope categories</th>
+<th>Representative scopes</th>
+<th>Redundant or discouraged scopes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a11y</code></td>
+<td>Components, screens, interactions, assistive technology</td>
+<td><code>dialog</code>, <code>forms</code>, <code>keyboard</code></td>
+<td><code>a11y</code>, <code>accessibility</code></td>
+</tr>
+<tr>
+<td><code>api</code></td>
+<td>Services, resources, versions, protocols</td>
+<td><code>auth</code>, <code>orders</code>, <code>v2</code></td>
+<td><code>api</code>; prefer <code>feat(api)</code> or <code>fix(api)</code> when that better conveys consumer impact</td>
+</tr>
+<tr>
+<td><code>build</code></td>
+<td>Build tools, package managers, bundlers, compilers, packaging targets</td>
+<td><code>docker</code>, <code>gradle</code>, <code>npm</code>, <code>pnpm</code>, <code>webpack</code></td>
+<td><code>build</code>, <code>ci</code>, <code>code</code></td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>Repository metadata and housekeeping areas</td>
+<td><code>metadata</code>, <code>owners</code>, <code>repo</code>, <code>templates</code></td>
+<td><code>chore</code>, <code>ci</code>, <code>docs</code></td>
+</tr>
+<tr>
+<td><code>ci</code></td>
+<td>CI providers, workflows, pipeline stages, runners</td>
+<td><code>codecov</code>, <code>github-actions</code>, <code>gitlab</code>, <code>lint</code>, <code>release</code></td>
+<td><code>ci</code>; <code>build</code> unless it names a specific build job</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>Services, environment classes, subsystems, integrations</td>
+<td><code>api</code>, <code>logging</code>, <code>storage</code></td>
+<td><code>config</code>; deployment work better represented by <code>build</code>, <code>ci</code>, or <code>infra</code></td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td>Datasets, catalogues, migration domains, mappings</td>
+<td><code>catalogue</code>, <code>countries</code>, <code>mappings</code></td>
+<td><code>data</code>; database code changes</td>
+</tr>
+<tr>
+<td><code>deps</code></td>
+<td>Runtime, development, optional, platform, ecosystem</td>
+<td><code>dev</code>, <code>node</code>, <code>python</code>, <code>runtime</code></td>
+<td><code>deps</code>; unnecessary package-name scopes</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>Documentation sections, audiences, packages, APIs, guides</td>
+<td><code>api</code>, <code>cli</code>, <code>contributing</code>, <code>readme</code>, <code>tutorial</code></td>
+<td><code>docs</code>, <code>documentation</code></td>
+</tr>
+<tr>
+<td><code>feat</code></td>
+<td>Product areas, packages, services, components</td>
+<td><code>api</code>, <code>auth</code>, <code>checkout</code>, <code>cli</code>, <code>parser</code></td>
+<td><code>code</code>, <code>feat</code>, <code>feature</code>, <code>new</code></td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>Affected components, platforms, protocols</td>
+<td><code>openapi</code>, <code>router</code>, <code>windows</code></td>
+<td><code>bug</code>, <code>fix</code>, <code>issue</code></td>
+</tr>
+<tr>
+<td><code>i18n</code></td>
+<td>Locales, application areas, translation catalogues</td>
+<td><code>checkout</code>, <code>fr</code>, <code>it</code></td>
+<td><code>i18n</code>; general UI changes</td>
+</tr>
+<tr>
+<td><code>infra</code></td>
+<td>Terraform modules, Kubernetes components, cloud services, environments</td>
+<td><code>database</code>, <code>kubernetes</code>, <code>network</code>, <code>terraform</code></td>
+<td><code>infra</code>; CI workflow changes</td>
+</tr>
+<tr>
+<td><code>legal</code></td>
+<td>Licenses, notices, privacy, attribution</td>
+<td><code>license</code>, <code>notices</code>, <code>privacy</code></td>
+<td><code>legal</code></td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td>Repository and package metadata, catalogues, badges</td>
+<td><code>citation</code>, <code>codemeta</code>, <code>package</code></td>
+<td><code>meta</code>, <code>metadata</code>; work better represented by <code>build</code>, <code>chore</code>, or <code>docs</code></td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>Hot paths and performance-sensitive layers</td>
+<td><code>cache</code>, <code>database</code>, <code>renderer</code></td>
+<td><code>perf</code>, <code>performance</code>, <code>speed</code></td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>Modules, packages, architecture layers</td>
+<td><code>core</code>, <code>storage</code>, <code>validation</code></td>
+<td><code>cleanup</code>, <code>code</code>, <code>refactor</code></td>
+</tr>
+<tr>
+<td><code>release</code></td>
+<td>Packages, distribution channels, documentation sites, images, platforms</td>
+<td><code>cli</code>, <code>container</code>, <code>npm</code></td>
+<td><code>release</code>; normal feature or bug changes</td>
+</tr>
+<tr>
+<td><code>revert</code></td>
+<td>Usually none; occasionally reverted component</td>
+<td><code>api</code>, <code>parser</code></td>
+<td><code>revert</code></td>
+</tr>
+<tr>
+<td><code>schema</code></td>
+<td>Schema families, APIs, events, entities, protocols, packages</td>
+<td><code>database</code>, <code>events</code>, <code>openapi</code>, <code>stac</code></td>
+<td><code>schema</code>; implementation-only changes</td>
+</tr>
+<tr>
+<td><code>security</code></td>
+<td>Affected security controls and attack surfaces</td>
+<td><code>access-control</code>, <code>auth</code>, <code>crypto</code>, <code>dependencies</code>, <code>secrets</code>, <code>supply-chain</code></td>
+<td><code>cve</code>, <code>fix</code>, <code>patch</code>, <code>security</code>, <code>vuln</code>, <code>vulnerability</code></td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Formatters, linters, affected modules</td>
+<td><code>eslint</code>, <code>parser</code>, <code>prettier</code>, <code>ruff</code></td>
+<td><code>formatting</code>, <code>style</code></td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>Tested packages, test layers, suites, integrations, fixtures</td>
+<td><code>api</code>, <code>e2e</code>, <code>integration</code>, <code>parser</code></td>
+<td><code>coverage</code>, <code>test</code>, <code>tests</code></td>
+</tr>
+<tr>
+<td><code>ux</code></td>
+<td>Flows, screens, components, accessibility areas</td>
+<td><code>checkout</code>, <code>navigation</code>, <code>onboarding</code></td>
+<td><code>ux</code>; functional work better represented by <code>feat</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="default-pair-examples">Default pair examples</h2>
+<table>
+<thead>
+<tr>
+<th>Preferred</th>
+<th>Avoid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a11y(dialog): restore keyboard focus</code></td>
+<td><code>a11y(accessibility): improve accessibility</code></td>
+</tr>
+<tr>
+<td><code>api(orders): publish the v2 contract</code></td>
+<td><code>api(api): update API</code></td>
+</tr>
+<tr>
+<td><code>build(pnpm): update lockfile</code></td>
+<td><code>build(build): update build</code></td>
+</tr>
+<tr>
+<td><code>ci(github-actions): add release job</code></td>
+<td><code>ci(ci): add release job</code></td>
+</tr>
+<tr>
+<td><code>config(logging): reduce production verbosity</code></td>
+<td><code>config(config): update configuration</code></td>
+</tr>
+<tr>
+<td><code>data(countries): refresh ISO mappings</code></td>
+<td><code>data(data): update data</code></td>
+</tr>
+<tr>
+<td><code>deps(runtime): upgrade React to 19.1</code></td>
+<td><code>deps(deps): upgrade dependencies</code></td>
+</tr>
+<tr>
+<td><code>docs(api): document pagination</code></td>
+<td><code>docs(docs): update documentation</code></td>
+</tr>
+<tr>
+<td><code>feat(cli): add JSON output</code></td>
+<td><code>feat(feature): add JSON output</code></td>
+</tr>
+<tr>
+<td><code>fix(auth): refresh expired tokens</code></td>
+<td><code>fix(bug): refresh expired tokens</code></td>
+</tr>
+<tr>
+<td><code>i18n(it): update checkout labels</code></td>
+<td><code>i18n(i18n): update translations</code></td>
+</tr>
+<tr>
+<td><code>infra(terraform): add database replica</code></td>
+<td><code>infra(infra): update infrastructure</code></td>
+</tr>
+<tr>
+<td><code>legal(license): update copyright year</code></td>
+<td><code>legal(legal): update legal files</code></td>
+</tr>
+<tr>
+<td><code>meta(codemeta): update project authors</code></td>
+<td><code>meta(metadata): update metadata</code></td>
+</tr>
+<tr>
+<td><code>release(container): publish 2.0 image</code></td>
+<td><code>release(release): prepare release</code></td>
+</tr>
+<tr>
+<td><code>schema(openapi): add batch endpoint contract</code></td>
+<td><code>schema(schema): update schema</code></td>
+</tr>
+<tr>
+<td><code>security(auth): reject replayed tokens</code></td>
+<td><code>security(security): improve security</code></td>
+</tr>
+<tr>
+<td><code>test(parser): cover escaped names</code></td>
+<td><code>test(test): add tests</code></td>
+</tr>
+<tr>
+<td><code>ux(onboarding): clarify the first-run flow</code></td>
+<td><code>ux(ux): improve user experience</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="sources-of-the-default-type-vocabulary">Sources of the default type vocabulary</h2>
+<p>Conventional Commits defines <code>feat</code> and <code>fix</code> as the types with standard semantic-version meaning and permits additional project-defined types. The bundled vocabulary is therefore a compatibility-oriented synthesis rather than a claim that every listed type belongs to the core specification.</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Types or practices represented in the defaults</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md">Angular commit guidelines</a></td>
+<td><code>build</code>, <code>ci</code>, <code>docs</code>, <code>feat</code>, <code>fix</code>, <code>perf</code>, <code>refactor</code>, <code>test</code></td>
+</tr>
+<tr>
+<td><a href="https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom">Atom commit guidelines, preserved by the Conventional Changelog preset</a></td>
+<td>Documentation, formatting, performance, security, test, and CI intent reinforce the corresponding synthesized types.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional">commitlint conventional configuration</a></td>
+<td>The common Angular-derived set, including <code>chore</code>, <code>revert</code>, and <code>style</code>; projects may replace its <code>type-enum</code>.</td>
+</tr>
+<tr>
+<td><a href="https://conventional-changelog.js.org/">Conventional Changelog</a></td>
+<td>Preset-based parsing and changelog sections for features, fixes, performance improvements, and breaking changes.</td>
+</tr>
+<tr>
+<td><a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits 1.0.0</a></td>
+<td><code>feat</code>, <code>fix</code>, and the breaking-change indicators; other types remain project-defined.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/googleapis/release-please#how-should-i-write-my-commits">Release Please</a></td>
+<td><code>deps</code>, <code>feat</code>, and <code>fix</code> as ordinary releasable units, with language-specific variations.</td>
+</tr>
+<tr>
+<td><a href="https://semantic-release.gitbook.io/semantic-release/support/faq#how-can-i-change-the-type-of-commits-that-trigger-a-release">semantic-release</a></td>
+<td>Breaking changes plus <code>feat</code>, <code>fix</code>, and <code>perf</code> in its default Angular-based release rules.</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vuejs/core/blob/main/.github/commit-convention.md">Vue commit convention</a></td>
+<td>The Angular-derived types, <code>chore</code>, <code>style</code>, and the special <code>revert</code> form represented by the synthesis.</td>
+</tr>
+<tr>
+<td>Common monorepo and domain conventions</td>
+<td><code>a11y</code>, <code>api</code>, <code>config</code>, <code>data</code>, <code>deps</code>, <code>i18n</code>, <code>infra</code>, <code>legal</code>, <code>meta</code>, <code>release</code>, <code>schema</code>, <code>security</code>, and <code>ux</code> cover optional first-class concerns; package names remain scopes rather than types.</td>
+</tr>
+</tbody>
+</table>
+<p>The default list is alphabetized for predictable picker navigation. The domain-oriented entries are project-defined extensions: use them when the distinction is valuable, and remove them from workspace policy when a core type plus a scope communicates the change more clearly—for example, prefer <code>feat(api)</code> over <code>api</code> for an externally observable API feature.</p>
+<h2 id="security-as-a-project-extension">Security as a project extension</h2>
+<p>Conventional Commits 1.0.0 defines the message grammar and the special meaning of <code>feat</code>, <code>fix</code>, and breaking-change indicators; it does not publish a closed standard type list. The bundled <code>security</code> type is therefore an intentional project convention. If commitlint or another tool restricts <code>type-enum</code>, configure the same extension there.</p>
+<p>Security scopes should identify the control, boundary, or subsystem affected rather than repeat the type. The default <code>security-areas</code> group draws from established application-security domains:</p>
+<ul>
+<li>OWASP ASVS separates authentication, session management, access control, validation, cryptography, data protection, communication, APIs, logging, and configuration;</li>
+<li>GitHub's secure supply-chain guidance separately emphasizes vulnerable dependencies, leaked secrets, and vulnerable code patterns; and</li>
+<li>NIST's Secure Software Development Framework distinguishes protecting software, producing well-secured software, and responding to vulnerabilities.</li>
+</ul>
+<p>Those sources support the generic defaults <code>access-control</code>, <code>api</code>, <code>auth</code>, <code>configuration</code>, <code>crypto</code>, <code>data-protection</code>, <code>dependencies</code>, <code>logging</code>, <code>secrets</code>, <code>session</code>, <code>supply-chain</code>, <code>transport</code>, and <code>validation</code>. They are a starting vocabulary, not a universal taxonomy: repository-specific components such as <code>artifact-signing</code>, <code>oauth</code>, <code>rbac</code>, <code>sandbox</code>, or <code>tls</code> remain valid custom scopes.</p>
+<p>Sources: <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits 1.0.0</a>, <a href="https://commitlint.js.org/reference/configuration.html">commitlint configuration</a>, <a href="https://devguide.owasp.org/en/06-verification/01-guides/03-asvs/">OWASP ASVS categories</a>, <a href="https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-code">GitHub secure supply-chain guidance</a>, and <a href="https://csrc.nist.gov/projects/ssdf">NIST SSDF</a>.</p>
+<h2 id="contextual-git-trailers">Contextual Git trailers</h2>
+<p>The default trailer policy provides suggestions and cautions rather than enforcement:</p>
+<table>
+<thead>
+<tr>
+<th>Commit type</th>
+<th>High-value trailers</th>
+<th>Usually irrelevant or suspicious</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>a11y</code></td>
+<td><code>Refs</code>, <code>Reported-by</code>, <code>Test</code>, <code>Tested-by</code></td>
+<td><code>BREAKING CHANGE</code>, unless the accessibility contract changes incompatibly</td>
+</tr>
+<tr>
+<td><code>api</code></td>
+<td><code>BREAKING CHANGE</code>, <code>Implements</code>, <code>Refs</code>, <code>Spec</code>, <code>Tested-by</code></td>
+<td><code>Release-note-none</code>, unless required by policy</td>
+</tr>
+<tr>
+<td><code>build</code></td>
+<td><code>Build</code>, <code>Dependency</code>, <code>Generated-by</code>, <code>Refs</code>, <code>Upstream</code></td>
+<td><code>Co-developed-by</code> unless genuinely applicable</td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td><code>Dependency-update</code>, <code>Generated-by</code>, <code>No-changelog</code>, <code>Refs</code></td>
+<td><code>Fixes</code> unless the maintenance change fixes an actual defect</td>
+</tr>
+<tr>
+<td><code>ci</code></td>
+<td><code>Build</code>, <code>CI</code>, <code>Depends-on</code>, <code>Refs</code>, <code>Test-plan</code></td>
+<td>User-facing <code>Release-note</code> in most cases</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td><code>Refs</code>, <code>Security-impact</code>, <code>Test-plan</code>, <code>Tested-by</code></td>
+<td><code>BREAKING CHANGE</code>, unless consumers depend on the configuration contract</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>Generated-by</code>, <code>Refs</code>, <code>Test-results</code>, <code>Tested-by</code></td>
+<td><code>Release-note</code>, unless consumers observe the data change</td>
+</tr>
+<tr>
+<td><code>deps</code></td>
+<td><code>Dependency</code>, <code>Dependency-update</code>, <code>Refs</code>, <code>Security-impact</code>, <code>Upstream</code></td>
+<td><code>BREAKING CHANGE</code>, unless consumers must change their code</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td><code>Co-authored-by</code>, <code>Link</code>, <code>Refs</code>, <code>Reviewed-by</code></td>
+<td><code>Tested-by</code>, except for documentation builds</td>
+</tr>
+<tr>
+<td><code>feat</code></td>
+<td><code>BREAKING CHANGE</code>, <code>Co-authored-by</code>, <code>Implements</code>, <code>Refs</code>, <code>Release-note</code>, <code>Spec</code>, <code>Tested-by</code></td>
+<td><code>Fixes</code> referring to a causal commit</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td><code>Backport-to</code>, <code>CVE</code>, <code>Closes</code>, <code>Fixes</code>, <code>Link</code>, <code>Reported-by</code>, <code>Tested-by</code></td>
+<td><code>Implements-blueprint</code></td>
+</tr>
+<tr>
+<td><code>i18n</code></td>
+<td><code>Refs</code>, <code>Reviewed-by</code>, <code>Tested-by</code></td>
+<td><code>BREAKING CHANGE</code> in most cases</td>
+</tr>
+<tr>
+<td><code>infra</code></td>
+<td><code>Build</code>, <code>CI</code>, <code>Depends-on</code>, <code>Refs</code>, <code>Test-plan</code></td>
+<td><code>Release-note</code>, unless infrastructure is a supported product surface</td>
+</tr>
+<tr>
+<td><code>legal</code></td>
+<td><code>Co-authored-by</code>, <code>Link</code>, <code>Refs</code>, <code>Reviewed-by</code></td>
+<td><code>Tested-by</code> in most cases</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>Generated-by</code>, <code>Link</code>, <code>Refs</code></td>
+<td><code>Fixes</code>, unless metadata corrects a tracked defect</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td><code>Benchmark</code>, <code>Fixes</code>, <code>Refs</code>, <code>Reviewed-by</code>, <code>Test-results</code></td>
+<td><code>Release-note-none</code>, unless required by policy</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td><code>Benchmark</code>, <code>Depends-on</code>, <code>Refs</code>, <code>Tested-by</code></td>
+<td><code>Closes</code>, unless it genuinely resolves an issue</td>
+</tr>
+<tr>
+<td><code>release</code></td>
+<td><code>Build</code>, <code>CI</code>, <code>Link</code>, <code>Refs</code>, <code>Release-note</code></td>
+<td><code>Fixes</code>, unless release preparation corrects a defect</td>
+</tr>
+<tr>
+<td><code>revert</code></td>
+<td><code>Fixes</code>, <code>Link</code>, <code>Reported-by</code>, <code>Reverts</code></td>
+<td><code>Implements</code></td>
+</tr>
+<tr>
+<td><code>schema</code></td>
+<td><code>BREAKING CHANGE</code>, <code>Implements</code>, <code>Refs</code>, <code>Spec</code>, <code>Tested-by</code></td>
+<td><code>Release-note-none</code>, unless required by policy</td>
+</tr>
+<tr>
+<td><code>security</code></td>
+<td><code>Backport-to</code>, <code>CVE</code>, <code>Closes</code>, <code>Fixes</code>, <code>GHSA</code>, <code>Reported-by</code>, <code>Security-impact</code></td>
+<td>Public embargo details before disclosure</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td><code>Generated-by</code>, <code>Refs</code>, <code>Reviewed-by</code></td>
+<td><code>BREAKING CHANGE</code> in most cases</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td><code>Coverage</code>, <code>Fixes</code>, <code>Refs</code>, <code>Reported-by</code>, <code>Test</code></td>
+<td><code>BREAKING CHANGE</code> in most cases</td>
+</tr>
+<tr>
+<td><code>ux</code></td>
+<td><code>Refs</code>, <code>Release-note</code>, <code>Reviewed-by</code>, <code>Tested-by</code></td>
+<td><code>BREAKING CHANGE</code>, unless the interaction contract changes incompatibly</td>
+</tr>
+</tbody>
+</table>
+<p><code>BREAKING CHANGE</code> is handled by the dedicated breaking-change step instead of the general trailer picker. Public repositories should keep undisclosed vulnerability and embargo details out of commit messages and use a private reporting or advisory channel until coordinated disclosure; see <a href="https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/report-privately">GitHub's private vulnerability reporting guidance</a>.</p>
+<h3 id="trailer-meanings-shown-by-the-composer">Trailer meanings shown by the composer</h3>
+<p>Git defines trailers as structured <code>token: value</code> lines but intentionally allows projects to create their own tokens. The defaults use these concise meanings:</p>
+<table>
+<thead>
+<tr>
+<th>Trailer</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BREAKING CHANGE</code></td>
+<td>Incompatible behavior and the migration required from consumers.</td>
+</tr>
+<tr>
+<td><code>Backport-to</code></td>
+<td>Target stable branch or release that should receive the change.</td>
+</tr>
+<tr>
+<td><code>Benchmark</code></td>
+<td>Benchmark command, result, or report demonstrating performance impact.</td>
+</tr>
+<tr>
+<td><code>Build</code></td>
+<td>Build tool, job, artifact, or result associated with the change.</td>
+</tr>
+<tr>
+<td><code>CI</code></td>
+<td>Continuous-integration workflow, job, or run associated with the change.</td>
+</tr>
+<tr>
+<td><code>CVE</code></td>
+<td>Public CVE identifier for the vulnerability.</td>
+</tr>
+<tr>
+<td><code>Closes</code></td>
+<td>Issue or report fully resolved by the change; may trigger tracker automation.</td>
+</tr>
+<tr>
+<td><code>Co-authored-by</code></td>
+<td>Additional author of the change, written as <code>Name &lt;email&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>Co-developed-by</code></td>
+<td>Person who jointly developed the change, written as <code>Name &lt;email&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>Coverage</code></td>
+<td>Coverage result or report affected by the tests in the change.</td>
+</tr>
+<tr>
+<td><code>Dependency</code></td>
+<td>Dependency name, version, or constraint affected by the change.</td>
+</tr>
+<tr>
+<td><code>Dependency-update</code></td>
+<td>Dependency and version transition performed by the change.</td>
+</tr>
+<tr>
+<td><code>Depends-on</code></td>
+<td>Change or dependency that must land before this change.</td>
+</tr>
+<tr>
+<td><code>Fixes</code></td>
+<td>Issue or causal commit whose defect the change corrects.</td>
+</tr>
+<tr>
+<td><code>GHSA</code></td>
+<td>GitHub Security Advisory identifier for the vulnerability or advisory.</td>
+</tr>
+<tr>
+<td><code>Generated-by</code></td>
+<td>Tool and version that generated the committed content.</td>
+</tr>
+<tr>
+<td><code>Implements</code></td>
+<td>Requirement or blueprint fully implemented by the change.</td>
+</tr>
+<tr>
+<td><code>Implements-blueprint</code></td>
+<td>Blueprint implemented by the change, when recognized by project tooling.</td>
+</tr>
+<tr>
+<td><code>Link</code></td>
+<td>URL to the relevant report, discussion, review, or supporting evidence.</td>
+</tr>
+<tr>
+<td><code>No-changelog</code></td>
+<td>Explicitly omits the change from generated changelog entries.</td>
+</tr>
+<tr>
+<td><code>Refs</code></td>
+<td>Related issue, ticket, commit, or document; does not imply completion.</td>
+</tr>
+<tr>
+<td><code>Release-note</code></td>
+<td>User-facing release note text or a reference to its source.</td>
+</tr>
+<tr>
+<td><code>Release-note-none</code></td>
+<td>Explicitly states that no user-facing release note is needed.</td>
+</tr>
+<tr>
+<td><code>Reported-by</code></td>
+<td>Person who originally found and reported the defect, written as <code>Name &lt;email&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>Reverts</code></td>
+<td>Commit or change intentionally undone by this commit.</td>
+</tr>
+<tr>
+<td><code>Reviewed-by</code></td>
+<td>Person who reviewed the change and found it acceptable, written as <code>Name &lt;email&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>Security-impact</code></td>
+<td>Security implications or impact addressed by the change.</td>
+</tr>
+<tr>
+<td><code>Spec</code></td>
+<td>Specification or design document governing the change.</td>
+</tr>
+<tr>
+<td><code>Test</code></td>
+<td>Exact manual test or command used to verify the change.</td>
+</tr>
+<tr>
+<td><code>Test-plan</code></td>
+<td>Checks that reviewers or CI should perform to validate the change.</td>
+</tr>
+<tr>
+<td><code>Test-results</code></td>
+<td>Observed automated or manual test results for the change.</td>
+</tr>
+<tr>
+<td><code>Tested-by</code></td>
+<td>Person who successfully tested the change, written as <code>Name &lt;email&gt;</code>.</td>
+</tr>
+<tr>
+<td><code>Upstream</code></td>
+<td>Upstream commit, issue, release, or source from which the change derives.</td>
+</tr>
+</tbody>
+</table>
+<p>The established meanings above are grounded in <a href="https://git-scm.com/docs/git-interpret-trailers">Git's trailer format</a>, <a href="https://kernel.org/doc/html/next/process/submitting-patches.html">Linux patch tags</a>, <a href="https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors">GitHub co-authorship</a>, <a href="https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue">GitHub closing keywords</a>, <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits breaking changes</a>, <a href="https://docs.openstack.org/contributors/common/git.html">OpenStack commit tags</a>, <a href="https://new.chromium.org/developers/contributing-code/-bug-syntax/">Chromium test and review footers</a>, <a href="https://docs.mesa3d.org/submittingpatches.html">Mesa backport tags</a>, <a href="https://www.cve.org/about/Process">CVE identifiers</a>, and <a href="https://docs.github.com/en/code-security/concepts/vulnerability-reporting-and-management/about-the-github-advisory-database">GitHub advisory identifiers</a>. Tokens such as <code>Benchmark</code>, <code>Coverage</code>, <code>Generated-by</code>, and <code>Dependency-update</code> have no cross-project standard; their bundled descriptions are neutral policy defaults.</p>
+<p>The bundled policy is intentionally generic. Projects can replace or extend every scope group, scope rule, and trailer rule through workspace settings.</p>
+<p>In <code>contextualConventionalCommits.typeScopeMatrix</code>, express the representative values through <code>groups</code> and <code>scopes</code>, place the discouraged values in <code>exclude</code>, and use <code>allowNone</code> and <code>allowCustom</code> to choose how strict each type should be. Use <code>contextualConventionalCommits.typeTrailerMatrix</code> for <code>highValue</code> and <code>discouraged</code> trailer guidance. See <a href="../how-to/configure-policy/">Configure a team policy</a> for a complete example.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../reference/settings/" class="btn btn-neutral float-left" title="Settings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../explanation/why-conventional-commits/" class="btn btn-neutral float-right" title="Why Conventional Commits?">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+      <p><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue"" alt="Apache License, Version 2.0" /></a></p>
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/conventional-commits-extension" class="fa fa-code-fork" style="color: #fcfcfc"> Terradue/conventional-commits-extension</a>
+        </span>
+    
+    
+      <span><a href="../reference/settings/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../explanation/why-conventional-commits/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/config.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
